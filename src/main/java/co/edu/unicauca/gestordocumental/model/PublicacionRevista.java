@@ -27,7 +27,7 @@ public class PublicacionRevista implements Serializable {
      */
     @Size(max = 50)
     @Column(name = "rev_doi")
-    @NotNull
+    // @NotNull
     private String doi;
     
     /**

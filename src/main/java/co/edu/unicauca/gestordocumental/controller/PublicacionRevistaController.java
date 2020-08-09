@@ -111,8 +111,8 @@ public class PublicacionRevistaController {
         String extensionClasificacionRevista = body.get("extensionClasificacionRevista");
         if ((extensionIndice == null || extensionIndice.length() == 0) 
             || (extensionArticulo == null || extensionArticulo.length() == 0) 
-            || (extensionCorreoAceptacion == null || extensionCorreoAceptacion.length() == 0) 
-            || (extensionClasificacionRevista == null || extensionClasificacionRevista.length() == 0)) {
+            || (extensionCorreoAceptacion == null || extensionCorreoAceptacion.length() == 0) ) {
+            // || (extensionClasificacionRevista == null || extensionClasificacionRevista.length() == 0)) {
             res.badRequest(1, 1);
         }
        
@@ -121,7 +121,7 @@ public class PublicacionRevistaController {
         Date fechaAceptacion = publicacionValidador.validarFechaAceptacion(body.get("fechaAceptacion"), true);
         Date fechaPublicacion = publicacionValidador.validarFechaPublicacion(body.get("fechaPublicacion"), false);  
         publicacionValidador.validarFechaAceptacionFechaPublicacion(fechaAceptacion, fechaPublicacion);
-        String doi = publicacionRevistaValidador.validarDoi(body.get("doi"), true);
+        String doi = publicacionRevistaValidador.validarDoi(body.get("doi"), false);
         String tituloArticulo = publicacionRevistaValidador.validarTituloArticulo(body.get("tituloArticulo"), true);
         String nombreRevista = publicacionRevistaValidador.validarNombreRevista(body.get("nombreRevista"), true);
         String categoria = publicacionRevistaValidador.validarCategoria(body.get("categoria"), true);        
@@ -139,7 +139,8 @@ public class PublicacionRevistaController {
         openKM.crearDocumento(indice.getBytes(), rutaFolder, "Indice", extensionIndice);
         openKM.crearDocumento(articulo.getBytes(), rutaFolder, "Articulo", extensionArticulo);
         openKM.crearDocumento(correoAceptacion.getBytes(), rutaFolder, "CorreoAceptacion", extensionCorreoAceptacion);
-        openKM.crearDocumento(clasificacionRevista.getBytes(), rutaFolder, "ClasificacionRevista", extensionClasificacionRevista);
+        if (extensionClasificacionRevista != null)
+            openKM.crearDocumento(clasificacionRevista.getBytes(), rutaFolder, "ClasificacionRevista", extensionClasificacionRevista);
          
         List<FormElement> metadatos = openKM.obtenerMetadatos(rutaFolder + "Indice." + extensionIndice, "okg:revista");
         for (FormElement metadato : metadatos) {
@@ -184,7 +185,8 @@ public class PublicacionRevistaController {
         openKM.asignarMetadatos(rutaFolder + "Indice." + extensionIndice, "okg:revista", metadatos);
         openKM.asignarMetadatos(rutaFolder + "Articulo." + extensionArticulo, "okg:revista", metadatos);
         openKM.asignarMetadatos(rutaFolder + "CorreoAceptacion." + extensionCorreoAceptacion, "okg:revista", metadatos);
-        openKM.asignarMetadatos(rutaFolder + "ClasificacionRevista." + extensionClasificacionRevista, "okg:revista", metadatos);
+        if (extensionClasificacionRevista != null)
+            openKM.asignarMetadatos(rutaFolder + "ClasificacionRevista." + extensionClasificacionRevista, "okg:revista", metadatos);
         
         /**
          * Se asigna el estudiante a la publicación y se registra

@@ -27,7 +27,7 @@ public class PublicacionCapituloLibro implements Serializable {
      */
     @Size(max = 40)
     @Column(name = "cap_isbn")
-    @NotNull
+    // @NotNull
     private String isbn;
     
     /**

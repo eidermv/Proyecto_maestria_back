@@ -107,11 +107,11 @@ public class PublicacionEventoController {
         Date fechaAceptacion = publicacionValidador.validarFechaAceptacion(body.get("fechaAceptacion"), true);
         Date fechaPublicacion = publicacionValidador.validarFechaPublicacion(body.get("fechaPublicacion"), false);
         publicacionValidador.validarFechaAceptacionFechaPublicacion(fechaAceptacion, fechaPublicacion);
-        String doi = publicacionEventoValidador.validarDoi(body.get("doi"), true);
+        String doi = publicacionEventoValidador.validarDoi(body.get("doi"), false);
         Date fechaInicio = publicacionEventoValidador.validarFechaInicio(body.get("fechaInicio"), true);
         Date fechaFin = publicacionEventoValidador.validarFechaFin(body.get("fechaFin"), true);
         publicacionEventoValidador.validarFechaInicioFechaFin(fechaInicio, fechaFin);
-        String issn = publicacionEventoValidador.validarIssn(body.get("issn"), true);
+        String issn = publicacionEventoValidador.validarIssn(body.get("issn"), false);
         String tituloPonencia = publicacionEventoValidador.validarTituloPonencia(body.get("tituloPonencia"), true);
         String nombreEvento = publicacionEventoValidador.validarNombreEvento(body.get("nombreEvento"), true);
         String tipoEvento = publicacionEventoValidador.validarTipoEvento(body.get("tipoEvento"), true);

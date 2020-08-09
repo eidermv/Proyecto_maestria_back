@@ -27,7 +27,7 @@ public class PublicacionLibro implements Serializable {
      */
     @Size(max = 40)
     @Column(name = "lib_isbn")
-    @NotNull
+    // @NotNull
     private String isbn;
     
     /**

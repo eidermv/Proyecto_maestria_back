@@ -30,7 +30,7 @@ public class PublicacionEvento implements Serializable {
      */
     @Size(max = 50)
     @Column(name = "eve_doi")
-    @NotNull
+    // @NotNull
     private String doi;
     
     /**
@@ -54,7 +54,7 @@ public class PublicacionEvento implements Serializable {
      */
     @Size(max = 50)
     @Column(name = "eve_issn")
-    @NotNull
+    // @NotNull
     private String issn;
     
     /**

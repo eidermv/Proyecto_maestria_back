@@ -107,7 +107,7 @@ public class PublicacionLibroController {
         Date fechaAceptacion = publicacionValidador.validarFechaAceptacion(body.get("fechaAceptacion"), true);
         Date fechaPublicacion = publicacionValidador.validarFechaPublicacion(body.get("fechaPublicacion"), false);
         publicacionValidador.validarFechaAceptacionFechaPublicacion(fechaAceptacion, fechaPublicacion);
-        String isbn = publicacionLibroValidador.validarIsbn(body.get("isbn"), true);
+        String isbn = publicacionLibroValidador.validarIsbn(body.get("isbn"), false);
         String tituloLibro = publicacionLibroValidador.validarTituloLibro(body.get("tituloLibro"), true);
         String editorial = publicacionLibroValidador.validarEditorial(body.get("editorial"), true);
         String pais = publicacionLibroValidador.validarPais(body.get("pais"), true);
