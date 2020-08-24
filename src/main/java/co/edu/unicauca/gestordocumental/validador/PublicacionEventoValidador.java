@@ -151,7 +151,7 @@ public class PublicacionEventoValidador {
     
     public String validarTipoEvento(String tipoEvento, boolean obligatorio) throws Exception {
         
-        String[] tiposEvento = new String[]{"Congreso", "Seminario", "Simposio"};
+        String[] tiposEvento = new String[]{"Congreso", "Seminario", "Simposio", "Otro"};
         boolean valido = false;
         
         for (String s : tiposEvento) {

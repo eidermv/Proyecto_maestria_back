@@ -51,7 +51,7 @@ public class PublicacionRevistaValidador {
     
     public String validarCategoria(String categoria, boolean obligatorio) throws Exception {
         
-        String[] categorias = new String[]{"a1", "a2", "b", "c"};
+        String[] categorias = new String[]{"a1", "a2", "b", "c", "sin clasificacion"};
         boolean valido = false;
         
         if (((categoria == null) || (categoria.length() == 0)) && obligatorio) {
