@@ -1,5 +1,6 @@
 package co.edu.unicauca.gestordocumental.model;
 
+import co.edu.unicauca.gestordocumental.model.seguimiento.Persona;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -13,10 +14,10 @@ import java.io.Serializable;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Estudiante.findByCodigo", query = "SELECT e FROM Estudiante e WHERE e.codigo =:codigo"),
-    @NamedQuery(name = "Estudiante.findByNombre", query = "SELECT e FROM Estudiante e WHERE e.nombres LIKE CONCAT('%',:nombre,'%') OR e.apellidos LIKE CONCAT('%',:nombre,'%')"),
-    @NamedQuery(name = "Estudiante.findByCorreo", query = "SELECT e FROM Estudiante e WHERE e.correo =:correo"),
-    @NamedQuery(name = "Estudiante.findByUsuario", query = "SELECT e FROM Estudiante e WHERE e.usuario =:usuario"),
-    @NamedQuery(name = "Estudiante.findByMatch", query = "SELECT e FROM Estudiante e WHERE e.nombres LIKE CONCAT('%',:match,'%') OR e.apellidos LIKE CONCAT('%',:match,'%') OR e.codigo LIKE CONCAT('%',:match,'%')")
+    @NamedQuery(name = "Estudiante.findByNombre", query = "SELECT e FROM Estudiante e WHERE e.persona.nombres LIKE CONCAT('%',:nombre,'%') OR e.persona.apellidos LIKE CONCAT('%',:nombre,'%')"),
+    @NamedQuery(name = "Estudiante.findByCorreo", query = "SELECT e FROM Estudiante e WHERE e.persona.correo =:correo"),
+    @NamedQuery(name = "Estudiante.findByUsuario", query = "SELECT e FROM Estudiante e, Usuario u WHERE u.persona = e.persona and u =:usuario"),
+    @NamedQuery(name = "Estudiante.findByMatch", query = "SELECT e FROM Estudiante e WHERE e.persona.nombres LIKE CONCAT('%',:match,'%') OR e.persona.apellidos LIKE CONCAT('%',:match,'%') OR e.codigo LIKE CONCAT('%',:match,'%')")
 })
 public class Estudiante implements Serializable {
     
@@ -105,10 +106,14 @@ public class Estudiante implements Serializable {
     
     /**
      * El usuario con el que accede al sistema el estudiante
-     */
+
     @JsonIgnore
     @OneToOne
     private Usuario usuario;
+*/
+    @OneToOne
+    @JoinColumn(name = "id_persona")
+    private Persona persona;
 
     public Estudiante() {
     }
@@ -216,11 +221,21 @@ public class Estudiante implements Serializable {
         this.tutor = tutor;
     }
 
+    /*
     public Usuario getUsuario() {
         return usuario;
     }
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
+    }
+    */
+
+    public Persona getPersona() {
+        return persona;
+    }
+
+    public void setPersona(Persona persona) {
+        this.persona = persona;
     }
 }

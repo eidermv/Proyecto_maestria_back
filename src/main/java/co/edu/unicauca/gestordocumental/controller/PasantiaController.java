@@ -5,6 +5,7 @@ import co.edu.unicauca.gestordocumental.model.OpenKM;
 import co.edu.unicauca.gestordocumental.model.Pasantia;
 import co.edu.unicauca.gestordocumental.repo.EstudianteRepo;
 import co.edu.unicauca.gestordocumental.repo.PasantiaRepo;
+import co.edu.unicauca.gestordocumental.repo.UsuarioRepo;
 import co.edu.unicauca.gestordocumental.respuesta.Respuesta;
 import co.edu.unicauca.gestordocumental.validador.PasantiaValidador;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -52,6 +53,9 @@ public class PasantiaController {
     
     @Autowired
     private EstudianteRepo estudianteRepo;
+
+    @Autowired
+    private UsuarioRepo usuarioRepo;
     
     public PasantiaController() {
         res = new Respuesta();
@@ -120,7 +124,7 @@ public class PasantiaController {
         pasantia.setEstado(Pasantia.ESTADO_POR_VERIFICAR);
         pasantiaRepo.save(pasantia);
         
-        String rutaFolder = OpenKM.RUTA_BASE + estudiante.getUsuario().getUsuario() + "/Pasantia/" + pasantia.getId();
+        String rutaFolder = OpenKM.RUTA_BASE + usuarioRepo.usuarioPorIdEst(estudiante.getId()) + "/Pasantia/" + pasantia.getId();
         openKM.crearFolder(rutaFolder);        
         rutaFolder += "/";
         openKM.crearDocumento(certificado.getBytes(), rutaFolder, "Informe", extensionInforme);
@@ -212,7 +216,7 @@ public class PasantiaController {
         if (pasantia == null) {
             res.badRequest(1007, 103);
         }
-        String rutaFolder = OpenKM.RUTA_BASE + pasantia.getEstudiante().getUsuario().getUsuario()
+        String rutaFolder = OpenKM.RUTA_BASE + usuarioRepo.usuarioPorIdEst(pasantia.getEstudiante().getId())
                 + "/Pasantia/" + pasantia.getId();
         
         String nombreReal = openKM.getNombreRealArchivo(rutaFolder, archivo);
@@ -280,7 +284,7 @@ public class PasantiaController {
             res.badRequest(1010, 104);
         }
         
-        String carpetaOpenKMEliminar = OpenKM.RUTA_BASE + pasantia.getEstudiante().getUsuario().getUsuario() + 
+        String carpetaOpenKMEliminar = OpenKM.RUTA_BASE + usuarioRepo.usuarioPorIdEst(pasantia.getEstudiante().getId()) +
                 "/Pasantia/" + pasantia.getId();
         
         pasantiaRepo.delete(pasantia);        

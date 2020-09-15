@@ -2,6 +2,7 @@ package co.edu.unicauca.gestordocumental.controller;
 
 import co.edu.unicauca.gestordocumental.config.ConstantesSeguridad;
 import co.edu.unicauca.gestordocumental.model.*;
+import co.edu.unicauca.gestordocumental.model.seguimiento.Persona;
 import co.edu.unicauca.gestordocumental.repo.EstudianteRepo;
 import co.edu.unicauca.gestordocumental.repo.TipoUsuarioRepo;
 import co.edu.unicauca.gestordocumental.repo.TutorRepo;
@@ -131,22 +132,29 @@ public class EstudianteController {
         nuevoUsuario.setUsuario(usuario);
         nuevoUsuario.setContrasena(contrasena);
         nuevoUsuario.setEstado(Boolean.TRUE);
-        nuevoUsuario.addTipoUsuario(tipoUsuario);
+        // nuevoUsuario.addTipoUsuario(tipoUsuario);
         usuarioRepo.save(nuevoUsuario);
+
+        Persona persona = new Persona();
+        persona.setNombres(nombres);
+        persona.setApellidos(apellidos);
+        persona.setCorreo(correo);
+        persona.setTipoUsuario(tipoUsuario);
 
         /*Se registra el estudiante*/
         Estudiante nuevoEstudiante = new Estudiante();
         nuevoEstudiante.setCodigo(codigo);
-        nuevoEstudiante.setNombres(nombres);
-        nuevoEstudiante.setApellidos(apellidos);
-        nuevoEstudiante.setCorreo(correo);
+        // nuevoEstudiante.setNombres(nombres);
+        // nuevoEstudiante.setApellidos(apellidos);
+        // nuevoEstudiante.setCorreo(correo);
         nuevoEstudiante.setCohorte(cohorte);
         nuevoEstudiante.setSemestre(semestre);
         nuevoEstudiante.setEstado(estado);
         nuevoEstudiante.setCreditos(0);
         nuevoEstudiante.setPertenece(pertenece);
         nuevoEstudiante.setTutor(tutorAsignado);
-        nuevoEstudiante.setUsuario(nuevoUsuario);
+        nuevoEstudiante.setPersona(persona);
+        // nuevoEstudiante.setUsuario(nuevoUsuario);
         estudianteRepo.save(nuevoEstudiante);
     }
 
@@ -222,9 +230,9 @@ public class EstudianteController {
         }
 
         String codigo = estudianteValidador.validarCodigo(body.getOrDefault("codigo", estudianteRegistrado.getCodigo()), false);
-        String nombres = estudianteValidador.validarNombres(body.getOrDefault("nombres", estudianteRegistrado.getNombres()), false);
-        String apellidos = estudianteValidador.validarApellidos(body.getOrDefault("apellidos", estudianteRegistrado.getApellidos()), false);
-        String correo = estudianteValidador.validarCorreo(body.getOrDefault("correo", estudianteRegistrado.getCorreo()), false);
+        String nombres = estudianteValidador.validarNombres(body.getOrDefault("nombres", estudianteRegistrado.getPersona().getNombres()), false);
+        String apellidos = estudianteValidador.validarApellidos(body.getOrDefault("apellidos", estudianteRegistrado.getPersona().getApellidos()), false);
+        String correo = estudianteValidador.validarCorreo(body.getOrDefault("correo", estudianteRegistrado.getPersona().getCorreo()), false);
         Integer cohorte = estudianteValidador.validarCohorte(body.getOrDefault("cohorte", "" + estudianteRegistrado.getCohorte()), false);
         Integer semestre = estudianteValidador.validarSemestre(body.getOrDefault("semestre", "" + estudianteRegistrado.getSemestre()), false);
         String estado = estudianteValidador.validarEstado(body.getOrDefault("estado", estudianteRegistrado.getEstado()), false);
@@ -251,9 +259,9 @@ public class EstudianteController {
 
         /*Se actualiza el estudiante*/
         estudianteRegistrado.setCodigo(codigo);
-        estudianteRegistrado.setNombres(nombres);
-        estudianteRegistrado.setApellidos(apellidos);
-        estudianteRegistrado.setCorreo(correo);
+        estudianteRegistrado.getPersona().setNombres(nombres);
+        estudianteRegistrado.getPersona().setApellidos(apellidos);
+        estudianteRegistrado.getPersona().setCorreo(correo);
         estudianteRegistrado.setCohorte(cohorte);
         estudianteRegistrado.setSemestre(semestre);
         estudianteRegistrado.setEstado(estado);
@@ -289,7 +297,7 @@ public class EstudianteController {
             res.badRequest(100, 103);
         }
         
-        Usuario usuario = estudianteRegistrado.getUsuario();
+        Usuario usuario = usuarioRepo.findByIdPersona(estudianteRegistrado.getPersona().getIdPersona());
         usuario.setContrasena(contrasena);
         
         usuarioRepo.save(usuario);

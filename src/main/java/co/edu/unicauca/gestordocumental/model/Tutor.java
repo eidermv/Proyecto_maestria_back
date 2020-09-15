@@ -1,5 +1,6 @@
 package co.edu.unicauca.gestordocumental.model;
 
+import co.edu.unicauca.gestordocumental.model.seguimiento.Persona;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import co.edu.unicauca.gestordocumental.model.seguimiento.TipoTutor;
@@ -15,8 +16,8 @@ import java.util.List;
 @Table(name = "tutor")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Tutor.findByNombre", query = "SELECT t FROM Tutor t WHERE t.nombres =:nombre"),
-    @NamedQuery(name = "Tutor.findAllByNombre", query = "SELECT t FROM Tutor t WHERE t.nombres LIKE CONCAT('%',:nombre,'%')")
+    @NamedQuery(name = "Tutor.findByNombre", query = "SELECT t FROM Tutor t WHERE concat(t.persona.nombres, ' ', t.persona.apellidos) =:nombre"),
+    @NamedQuery(name = "Tutor.findAllByNombre", query = "SELECT t FROM Tutor t WHERE concat(t.persona.nombres, ' ', t.persona.apellidos) LIKE CONCAT('%',:nombre,'%')")
 })
 public class Tutor implements Serializable {
     
@@ -66,10 +67,15 @@ public class Tutor implements Serializable {
     @JsonIgnore
     @OneToMany(mappedBy = "tutor")
     private List<Estudiante> estudiantes;
-    
+    /*
     @JsonIgnore
     @OneToOne
     private Usuario usuario;
+     */
+
+    @OneToOne
+    @JoinColumn(name = "id_persona")
+    private Persona persona;
 
     public Tutor() {
     }
@@ -157,4 +163,12 @@ public class Tutor implements Serializable {
 	public void setUniversidad(String universidad) {
 		this.universidad = universidad;
 	}
+
+    public Persona getPersona() {
+        return persona;
+    }
+
+    public void setPersona(Persona persona) {
+        this.persona = persona;
+    }
 }

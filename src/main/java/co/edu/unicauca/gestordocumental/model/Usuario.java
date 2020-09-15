@@ -1,6 +1,8 @@
 
 package co.edu.unicauca.gestordocumental.model;
 
+import co.edu.unicauca.gestordocumental.model.seguimiento.Persona;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -31,19 +33,24 @@ public class Usuario implements Serializable
     @Column(name = "usu_estado")
     @NotNull
     private Boolean estado;
-    
+
+    @OneToOne
+    @JoinColumn(name = "id_persona")
+    private Persona persona;
+    /*
     @ManyToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
     @JoinTable(
         name = "grupo_tipo_usuario", 
         joinColumns = { @JoinColumn(name = "usu_id") }, 
         inverseJoinColumns = { @JoinColumn(name = "tipo_usu_id")}
     )
+
     private Set<TipoUsuario> tiposUsuario;
 
     public Usuario() {
         this.tiposUsuario = new HashSet<>();
     }
-
+*/
     public Integer getId() {
         return id;
     }
@@ -59,14 +66,14 @@ public class Usuario implements Serializable
     public Boolean getEstado() {
         return estado;
     }
-    
+   /*
     public ArrayList getTiposUsuario()
     {
         ArrayList<TipoUsuario> r = new ArrayList();
         r.addAll(tiposUsuario);
         return r;
     }
-
+*/
     public void setId(Integer id) {
         this.id = id;
     }
@@ -82,7 +89,7 @@ public class Usuario implements Serializable
     public void setEstado(Boolean estado) {
         this.estado = estado;
     }
-    
+    /*
     public void addTipoUsuario(TipoUsuario tipoUsuario)
     {
         this.tiposUsuario.add(tipoUsuario);
@@ -91,5 +98,14 @@ public class Usuario implements Serializable
     public void setTiposUsuario(Set<TipoUsuario> tiposUsuario) {
         this.tiposUsuario = tiposUsuario;
     }
-    
+
+     */
+
+    public Persona getPersona() {
+        return persona;
+    }
+
+    public void setPersona(Persona persona) {
+        this.persona = persona;
+    }
 }

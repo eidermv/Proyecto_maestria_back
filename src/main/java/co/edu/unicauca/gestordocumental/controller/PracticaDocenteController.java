@@ -5,6 +5,7 @@ import co.edu.unicauca.gestordocumental.model.OpenKM;
 import co.edu.unicauca.gestordocumental.model.PracticaDocente;
 import co.edu.unicauca.gestordocumental.repo.EstudianteRepo;
 import co.edu.unicauca.gestordocumental.repo.PracticaDocenteRepo;
+import co.edu.unicauca.gestordocumental.repo.UsuarioRepo;
 import co.edu.unicauca.gestordocumental.respuesta.Respuesta;
 import co.edu.unicauca.gestordocumental.validador.PracticaDocenteValidador;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -50,6 +51,9 @@ public class PracticaDocenteController {
     
     @Autowired
     private EstudianteRepo estudianteRepo;
+
+    @Autowired
+    private UsuarioRepo usuarioRepo;
     
     public PracticaDocenteController() {
         res = new Respuesta();
@@ -110,7 +114,7 @@ public class PracticaDocenteController {
         practicaDocente.setTipoPracticaDocente(tipoPracticaDocente);
         practicaDocente = practicaDocenteRepo.save(practicaDocente);
         
-        String rutaFolder = OpenKM.RUTA_BASE + estudiante.getUsuario().getUsuario() + "/PracticaDocente/" + practicaDocente.getId();
+        String rutaFolder = OpenKM.RUTA_BASE + usuarioRepo.usuarioPorIdEst(estudiante.getId()) + "/PracticaDocente/" + practicaDocente.getId();
         openKM.crearFolder(rutaFolder);        
         rutaFolder += "/";
         openKM.crearDocumento(certificado.getBytes(), rutaFolder, "Certificado", extensionCertificado);
@@ -214,7 +218,7 @@ public class PracticaDocenteController {
         if (practicaDocente == null) {
             res.badRequest(903, 103);
         }
-        String rutaFolder = OpenKM.RUTA_BASE + practicaDocente.getEstudiante().getUsuario().getUsuario()
+        String rutaFolder = OpenKM.RUTA_BASE + usuarioRepo.usuarioPorIdEst(practicaDocente.getEstudiante().getId())
                 + "/PracticaDocente/" + practicaDocente.getId();
         
         String nombreReal = openKM.getNombreRealArchivo(rutaFolder, archivo);
@@ -282,7 +286,7 @@ public class PracticaDocenteController {
             res.badRequest(907, 104);
         }
         
-        String carpetaOpenKMEliminar = OpenKM.RUTA_BASE + practicaDocente.getEstudiante().getUsuario().getUsuario() + 
+        String carpetaOpenKMEliminar = OpenKM.RUTA_BASE + usuarioRepo.usuarioPorIdEst(practicaDocente.getEstudiante().getId()) +
                 "/PracticaDocente/" + practicaDocente.getId();
         
         practicaDocenteRepo.delete(practicaDocente);        

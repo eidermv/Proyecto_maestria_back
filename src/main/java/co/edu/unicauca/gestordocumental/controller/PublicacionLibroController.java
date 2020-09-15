@@ -7,6 +7,7 @@ import co.edu.unicauca.gestordocumental.model.PublicacionLibro;
 import co.edu.unicauca.gestordocumental.repo.EstudianteRepo;
 import co.edu.unicauca.gestordocumental.repo.PublicacionLibroRepo;
 import co.edu.unicauca.gestordocumental.repo.PublicacionRepo;
+import co.edu.unicauca.gestordocumental.repo.UsuarioRepo;
 import co.edu.unicauca.gestordocumental.respuesta.Respuesta;
 import co.edu.unicauca.gestordocumental.validador.PublicacionLibroValidador;
 import co.edu.unicauca.gestordocumental.validador.PublicacionValidador;
@@ -62,6 +63,9 @@ public class PublicacionLibroController {
     
     @Autowired
     private PublicacionLibroRepo publicacionLibroRepo;
+
+    @Autowired
+    private UsuarioRepo usuarioRepo;
     
     public PublicacionLibroController() {
         res = new Respuesta();
@@ -116,7 +120,7 @@ public class PublicacionLibroController {
         /**
          * Se verifica que no exista el folder de la publicación y se crea
          */
-        String rutaFolder = OpenKM.RUTA_BASE + estudiante.getUsuario().getUsuario() + "/Libro/" + tituloLibro;
+        String rutaFolder = OpenKM.RUTA_BASE + usuarioRepo.usuarioPorIdEst(estudiante.getId()) + "/Libro/" + tituloLibro;
         if (openKM.verificarExistenciaRuta(rutaFolder)) {
            res.badRequest(701, 102);
         }
@@ -233,7 +237,7 @@ public class PublicacionLibroController {
         if (publicacionLibro == null) {
             res.badRequest(405, 103);
         }
-        String rutaFolder = OpenKM.RUTA_BASE + publicacionLibro.getPublicacion().getEstudiante().getUsuario().getUsuario()
+        String rutaFolder = OpenKM.RUTA_BASE + usuarioRepo.usuarioPorIdEst(publicacionLibro.getPublicacion().getEstudiante().getId())
                 + "/Libro/" + publicacionLibro.getTituloLibro();
         
         String nombreReal = openKM.getNombreRealArchivo(rutaFolder, archivo);

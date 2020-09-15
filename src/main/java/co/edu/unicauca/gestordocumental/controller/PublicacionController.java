@@ -49,6 +49,9 @@ public class PublicacionController {
     
     @Autowired
     private EstudianteRepo estudianteRepo;
+
+    @Autowired
+    private UsuarioRepo usuarioRepo;
     
     public PublicacionController() {
         res = new Respuesta();
@@ -135,7 +138,7 @@ public class PublicacionController {
             res.badRequest(405, 103);
         
         String tipoPublicacion = publicacion.getTipoDocumento();
-        String carpetaOpenKMEliminar = OpenKM.RUTA_BASE + publicacion.getEstudiante().getUsuario().getUsuario() + "/";
+        String carpetaOpenKMEliminar = OpenKM.RUTA_BASE + usuarioRepo.usuarioPorIdEst(publicacion.getEstudiante().getId()) + "/";
         
         switch(tipoPublicacion)
         {

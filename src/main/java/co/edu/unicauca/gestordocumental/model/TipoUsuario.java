@@ -26,10 +26,10 @@ public class TipoUsuario implements Serializable
     @Column(name = "tipo_usu_nombre")
     @NotNull
     private String nombre;
-    
+    /*
      @ManyToMany(mappedBy = "tiposUsuario", fetch = FetchType.EAGER)
     private Set<Usuario> users = new HashSet<>();
-
+*/
     public long getId() {
         return id;
     }
@@ -45,7 +45,7 @@ public class TipoUsuario implements Serializable
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-
+/*
     public Set<Usuario> getUsers() {
         return users;
     }
@@ -53,4 +53,5 @@ public class TipoUsuario implements Serializable
     public void setUsers(Set<Usuario> users) {
         this.users = users;
     }
+ */
 }

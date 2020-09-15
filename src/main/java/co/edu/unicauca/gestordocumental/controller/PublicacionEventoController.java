@@ -7,6 +7,7 @@ import co.edu.unicauca.gestordocumental.model.PublicacionEvento;
 import co.edu.unicauca.gestordocumental.repo.EstudianteRepo;
 import co.edu.unicauca.gestordocumental.repo.PublicacionEventoRepo;
 import co.edu.unicauca.gestordocumental.repo.PublicacionRepo;
+import co.edu.unicauca.gestordocumental.repo.UsuarioRepo;
 import co.edu.unicauca.gestordocumental.respuesta.Respuesta;
 import co.edu.unicauca.gestordocumental.validador.PublicacionEventoValidador;
 import co.edu.unicauca.gestordocumental.validador.PublicacionValidador;
@@ -61,7 +62,10 @@ public class PublicacionEventoController {
     private EstudianteRepo estudianteRepo;
     
     @Autowired
-    private PublicacionEventoRepo publicacionEventoRepo;    
+    private PublicacionEventoRepo publicacionEventoRepo;
+
+    @Autowired
+    private UsuarioRepo usuarioRepo;
     
     public PublicacionEventoController() {
         res = new Respuesta();
@@ -121,7 +125,7 @@ public class PublicacionEventoController {
         /**
          * Se verifica que no exista el folder de la publicación y se crea
          */
-        String rutaFolder = OpenKM.RUTA_BASE + estudiante.getUsuario().getUsuario() + "/Evento/" + tituloPonencia;
+        String rutaFolder = OpenKM.RUTA_BASE + usuarioRepo.usuarioPorIdEst(estudiante.getId()) + "/Evento/" + tituloPonencia;
         if (openKM.verificarExistenciaRuta(rutaFolder)) {
            res.badRequest(604, 102);
         }
@@ -258,7 +262,7 @@ public class PublicacionEventoController {
         if (publicacionEvento == null) {
             res.badRequest(405, 103);
         }
-        String rutaFolder = OpenKM.RUTA_BASE + publicacionEvento.getPublicacion().getEstudiante().getUsuario().getUsuario()
+        String rutaFolder = OpenKM.RUTA_BASE + usuarioRepo.usuarioPorIdEst(publicacionEvento.getPublicacion().getEstudiante().getId())
                 + "/Evento/" + publicacionEvento.getTituloPonencia();
         
         String nombreReal = openKM.getNombreRealArchivo(rutaFolder, archivo);
