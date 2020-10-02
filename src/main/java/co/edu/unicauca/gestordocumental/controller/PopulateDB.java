@@ -56,7 +56,7 @@ public class PopulateDB {
         Usuario usuario = new Usuario();
         usuario.setEstado(true);
         TipoUsuario tipoUsuario = tipoUsuarioRepo.findByNombre("Coordinador");
-        usuario.getPersona().setTipoUsuario(tipoUsuario);
+        usuario.getPersona().addTipoUsuario(tipoUsuario);
         usuario.setUsuario("pmage");
         usuario.setContrasena(bCryptPasswordEncoder.encode("123"));
         
@@ -82,7 +82,7 @@ public class PopulateDB {
         Usuario usuario = new Usuario();
         usuario.setUsuario("angiedanielav");
         usuario.setContrasena(bCryptPasswordEncoder.encode("123"));
-        usuario.getPersona().setTipoUsuario(tipoUusario);
+        usuario.getPersona().addTipoUsuario(tipoUusario);
         usuario.setEstado(true);
         
         usuarioRepo.save(usuario);

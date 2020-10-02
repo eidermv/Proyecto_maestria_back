@@ -90,17 +90,22 @@ public class Usuario implements Serializable
         this.estado = estado;
     }
     /*
-    public void addTipoUsuario(TipoUsuario tipoUsuario)
-    {
-        this.tiposUsuario.add(tipoUsuario);
-    }
+        public void addTipoUsuario(TipoUsuario tipoUsuario)
+        {
+            this.persona.tiposUsuario.add(tipoUsuao);
+        }
 
-    public void setTiposUsuario(Set<TipoUsuario> tiposUsuario) {
-        this.tiposUsuario = tiposUsuario;
-    }
+        public void setTiposUsuario(Set<TipoUsuario> tiposUsuario) {
+            this.persona.tiposUsuario = tiposUsuario;
+        }
 
-     */
-
+        public ArrayList getTiposUsuario()
+        {
+            ArrayList<TipoUsuario> r = new ArrayList();
+            r.addAll(this.persona.tiposUsuario);
+            return r;
+        }
+    */
     public Persona getPersona() {
         return persona;
     }

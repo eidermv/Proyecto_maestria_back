@@ -1,6 +1,8 @@
 
 package co.edu.unicauca.gestordocumental.model;
 
+import co.edu.unicauca.gestordocumental.model.seguimiento.Persona;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -26,10 +28,10 @@ public class TipoUsuario implements Serializable
     @Column(name = "tipo_usu_nombre")
     @NotNull
     private String nombre;
-    /*
+
      @ManyToMany(mappedBy = "tiposUsuario", fetch = FetchType.EAGER)
-    private Set<Usuario> users = new HashSet<>();
-*/
+    private Set<Persona> personas = new HashSet<>();
+
     public long getId() {
         return id;
     }
@@ -45,13 +47,13 @@ public class TipoUsuario implements Serializable
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-/*
-    public Set<Usuario> getUsers() {
-        return users;
+
+    public Set<Persona> getPersonas() {
+        return this.personas;
     }
 
-    public void setUsers(Set<Usuario> users) {
-        this.users = users;
+    public void setPersonas(Set<Persona> personas) {
+        this.personas = personas;
     }
- */
+
 }

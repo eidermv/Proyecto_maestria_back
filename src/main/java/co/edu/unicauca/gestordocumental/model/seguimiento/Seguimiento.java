@@ -1,13 +1,6 @@
 package co.edu.unicauca.gestordocumental.model.seguimiento;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 import co.edu.unicauca.gestordocumental.model.Estudiante;
@@ -35,17 +28,23 @@ public class Seguimiento {
     @Column(name = "nombre")
     @NotNull
     private String nombre;
-    
+
     @OneToOne
     @JoinColumn(name = "id_tutor")
     private Tutor tutor;
-    
+
+    @Column(name = "codirector")
+    private String codirector;
+/*
+	@OneToOne
+	@JoinColumn(name = "id_tutor_codirector")
+	private Tutor codirector;
+    */
     @OneToOne
     @JoinColumn(name = "est_id")
     private Estudiante estudiante;
 
 	@Column(name = "cohorte")
-	@NotNull
 	private String cohorte;
     
     @Column(name = "objetivo_general")
@@ -138,8 +137,14 @@ public class Seguimiento {
 	public void setEstadoSeguimiento(EstadoSeguimiento estado_seguimiento) {
 		this.estado_seguimiento = estado_seguimiento;
 	}
-    
-	
-	
+
+
+	public String getCodirector() {
+		return codirector;
+	}
+
+	public void setCodirector(String codirector) {
+		this.codirector = codirector;
+	}
 
 }

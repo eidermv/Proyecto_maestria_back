@@ -139,7 +139,7 @@ public class EstudianteController {
         persona.setNombres(nombres);
         persona.setApellidos(apellidos);
         persona.setCorreo(correo);
-        persona.setTipoUsuario(tipoUsuario);
+        persona.addTipoUsuario(tipoUsuario);
 
         /*Se registra el estudiante*/
         Estudiante nuevoEstudiante = new Estudiante();
@@ -301,23 +301,6 @@ public class EstudianteController {
         usuario.setContrasena(contrasena);
         
         usuarioRepo.save(usuario);
-    }
-    
-    @PreAuthorize("hasAuthority('Estudiante')")
-    @GetMapping(path="/buscar/token/{token}")
-    public @ResponseBody Estudiante getEstudianteByToken(
-            @PathVariable String token) {
-        
-        Claims claims = (Claims) Jwts.parser()
-                    .setSigningKey(ConstantesSeguridad.SECRET)
-                    .parseClaimsJws(token.replace(ConstantesSeguridad.TOKEN_PREFIX, ""))
-                    .getBody();
-            
-            
-        String nombreUsuario = claims.getSubject();
-        Usuario usuario = usuarioRepo.findByUsuario(nombreUsuario);
-        
-        return estudianteRepo.findByUsuario(usuario);
     }
     
 }

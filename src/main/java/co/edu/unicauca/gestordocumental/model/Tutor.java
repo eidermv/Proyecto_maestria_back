@@ -19,16 +19,16 @@ import java.util.List;
     @NamedQuery(name = "Tutor.findByNombre", query = "SELECT t FROM Tutor t WHERE concat(t.persona.nombres, ' ', t.persona.apellidos) =:nombre"),
     @NamedQuery(name = "Tutor.findAllByNombre", query = "SELECT t FROM Tutor t WHERE concat(t.persona.nombres, ' ', t.persona.apellidos) LIKE CONCAT('%',:nombre,'%')")
 })
-public class Tutor implements Serializable {
+public class Tutor extends Persona implements Serializable {
     
     /**
      * Id del tutor
      */
-    @Id
+
     @Column(name = "id_tutor")
     @GeneratedValue(strategy=GenerationType.AUTO)
     @NotNull
-    private int id;
+    private int id_tutor;
     
     @Column(name = "identificacion")
     @NotNull
@@ -84,12 +84,12 @@ public class Tutor implements Serializable {
         this.nombres = nombre;
     }
 
-    public int getId() {
-        return id;
+    public int getId_tutor() {
+        return id_tutor;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setId_tutor(int id) {
+        this.id_tutor = id;
     }
 
     public String getNombre() {
@@ -132,11 +132,11 @@ public class Tutor implements Serializable {
 		this.telefono = telefono;
 	}
 
-	private String getDepartamento() {
+	public String getDepartamento() {
 		return departamento;
 	}
 
-	private void setDepartamento(String departamento) {
+	public void setDepartamento(String departamento) {
 		this.departamento = departamento;
 	}
 

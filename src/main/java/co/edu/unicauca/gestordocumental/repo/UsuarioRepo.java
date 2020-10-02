@@ -3,7 +3,9 @@ package co.edu.unicauca.gestordocumental.repo;
 import co.edu.unicauca.gestordocumental.model.Usuario;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface UsuarioRepo extends CrudRepository<Usuario, Integer>
 {
     Usuario findByUsuario(String usuario);

@@ -43,7 +43,7 @@ public class JWTAutenticacionFiltro extends UsernamePasswordAuthenticationFilter
                     new UsernamePasswordAuthenticationToken(
                             creds.getUsuario(),
                             creds.getContrasena(),
-                            creds.getTiposUsuario())
+                            creds.getPersona().getTiposUsuario())
             );
         } 
         catch (IOException e)

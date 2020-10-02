@@ -19,12 +19,12 @@ import java.io.Serializable;
     @NamedQuery(name = "Estudiante.findByUsuario", query = "SELECT e FROM Estudiante e, Usuario u WHERE u.persona = e.persona and u =:usuario"),
     @NamedQuery(name = "Estudiante.findByMatch", query = "SELECT e FROM Estudiante e WHERE e.persona.nombres LIKE CONCAT('%',:match,'%') OR e.persona.apellidos LIKE CONCAT('%',:match,'%') OR e.codigo LIKE CONCAT('%',:match,'%')")
 })
-public class Estudiante implements Serializable {
+public class Estudiante extends Persona implements Serializable {
     
     /**
      * Identificador del estudiante
      */
-    @Id
+    
     @Column(name = "est_id")
     @GeneratedValue(strategy=GenerationType.AUTO)
     @NotNull
@@ -111,6 +111,7 @@ public class Estudiante implements Serializable {
     @OneToOne
     private Usuario usuario;
 */
+
     @OneToOne
     @JoinColumn(name = "id_persona")
     private Persona persona;
