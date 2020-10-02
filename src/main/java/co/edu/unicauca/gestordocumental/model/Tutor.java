@@ -19,12 +19,13 @@ import java.util.List;
     @NamedQuery(name = "Tutor.findByNombre", query = "SELECT t FROM Tutor t WHERE concat(t.persona.nombres, ' ', t.persona.apellidos) =:nombre"),
     @NamedQuery(name = "Tutor.findAllByNombre", query = "SELECT t FROM Tutor t WHERE concat(t.persona.nombres, ' ', t.persona.apellidos) LIKE CONCAT('%',:nombre,'%')")
 })
-public class Tutor extends Persona implements Serializable {
+public class Tutor implements Serializable {
     
     /**
      * Id del tutor
      */
 
+    @Id
     @Column(name = "id_tutor")
     @GeneratedValue(strategy=GenerationType.AUTO)
     @NotNull
