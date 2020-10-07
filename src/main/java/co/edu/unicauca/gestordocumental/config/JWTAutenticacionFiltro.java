@@ -1,5 +1,6 @@
 package co.edu.unicauca.gestordocumental.config;
 
+import co.edu.unicauca.gestordocumental.model.TipoUsuario;
 import co.edu.unicauca.gestordocumental.model.Usuario;
 import co.edu.unicauca.gestordocumental.token.TokenServicio;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -39,11 +40,12 @@ public class JWTAutenticacionFiltro extends UsernamePasswordAuthenticationFilter
         {
             Usuario creds = new ObjectMapper()
                     .readValue(req.getInputStream(), Usuario.class);
+            System.out.println(creds.getTiposUsuario().size());
             return authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
                             creds.getUsuario(),
                             creds.getContrasena(),
-                            creds.getPersona().getTiposUsuario())
+                            creds.getTiposUsuario())
             );
         } 
         catch (IOException e)
@@ -61,6 +63,7 @@ public class JWTAutenticacionFiltro extends UsernamePasswordAuthenticationFilter
         String authorities = auth.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
+        System.out.println("roles de inicio " + authorities);
         
         String username = ((User) auth.getPrincipal()).getUsername();
         String token = TokenServicio.crearToken(username, authorities);

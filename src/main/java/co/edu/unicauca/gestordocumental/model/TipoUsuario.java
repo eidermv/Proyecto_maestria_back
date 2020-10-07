@@ -29,8 +29,12 @@ public class TipoUsuario implements Serializable
     @NotNull
     private String nombre;
 
-     @ManyToMany(mappedBy = "tiposUsuario", fetch = FetchType.EAGER)
-    private Set<Persona> personas = new HashSet<>();
+    @ManyToMany(mappedBy = "tiposUsuario", fetch = FetchType.EAGER)
+    private Set<Usuario> usuarios = new HashSet<>();
+
+     public TipoUsuario () {
+
+     }
 
     public long getId() {
         return id;
@@ -48,12 +52,12 @@ public class TipoUsuario implements Serializable
         this.nombre = nombre;
     }
 
-    public Set<Persona> getPersonas() {
-        return this.personas;
+    public Set<Usuario> getUsuarios() {
+        return this.usuarios;
     }
 
-    public void setPersonas(Set<Persona> personas) {
-        this.personas = personas;
+    public void setUsuarios(Set<Usuario> usuarios) {
+        this.usuarios = usuarios;
     }
 
 }

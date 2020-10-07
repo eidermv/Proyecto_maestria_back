@@ -101,9 +101,9 @@ public class EstudianteController {
             res.badRequest(103, 102);
         }
 
-        if(tutor == null) {
+        /*if(tutor == null) {
             res.badRequest(1, 1);
-        }
+        }*/
 
         /*Se verifica que el tutor esté registrado*/
         Tutor tutorAsignado = tutorRepo.findByNombre(tutor);
@@ -132,14 +132,14 @@ public class EstudianteController {
         nuevoUsuario.setUsuario(usuario);
         nuevoUsuario.setContrasena(contrasena);
         nuevoUsuario.setEstado(Boolean.TRUE);
-        // nuevoUsuario.addTipoUsuario(tipoUsuario);
+        nuevoUsuario.addTipoUsuario(tipoUsuario);
         usuarioRepo.save(nuevoUsuario);
 
         Persona persona = new Persona();
         persona.setNombres(nombres);
         persona.setApellidos(apellidos);
         persona.setCorreo(correo);
-        persona.addTipoUsuario(tipoUsuario);
+        // persona.addTipoUsuario(tipoUsuario);
 
         /*Se registra el estudiante*/
         Estudiante nuevoEstudiante = new Estudiante();

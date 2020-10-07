@@ -52,8 +52,11 @@ public class TutorController {
      */
     @PreAuthorize("hasAuthority('Coordinador')")
     @GetMapping(path="/buscar/todo")
-    public @ResponseBody Iterable<Tutor> getTodosTutores() {        
-        return tutorRepo.findAll();
+    public @ResponseBody List<String> getTodosTutores() {
+        System.out.println("entra aqui para cargar tutores --- ");
+        List<String> iterable = tutorRepo.listarTodos();
+        System.out.println(" aqui ---- " + iterable.get(0));
+        return iterable;
     }
     
      /**
@@ -98,7 +101,7 @@ public class TutorController {
             Set<TipoUsuario> tipo = new HashSet<>();
             TipoUsuario tut = tipoUsuarioRepo.findById(3).get();
             tipo.add(tut);
-            personaNueva.setTiposUsuario(tipo);
+            // personaNueva.setTiposUsuario(tipo);
 
             Persona guardada = this.personaRepo.save(personaNueva);
 
@@ -107,6 +110,7 @@ public class TutorController {
                 usuarioNuevo.setEstado(true);
                 usuarioNuevo.setUsuario(correo);
                 usuarioNuevo.setContrasena(bCryptPasswordEncoder.encode(identificacion));
+                usuarioNuevo.setTiposUsuario(tipo);
 
                 Usuario us = usuarioRepo.save(usuarioNuevo);
 
@@ -180,7 +184,7 @@ public class TutorController {
             Set<TipoUsuario> tipo = new HashSet<>();
             TipoUsuario tut = tipoUsuarioRepo.findById(3).get();
             tipo.add(tut);
-            personaNueva.setTiposUsuario(tipo);
+            // personaNueva.setTiposUsuario(tipo);
 
             Persona guardada = this.personaRepo.save(personaNueva);
 
@@ -189,6 +193,7 @@ public class TutorController {
                 usuarioNuevo.setEstado(true);
                 usuarioNuevo.setUsuario(correo);
                 usuarioNuevo.setContrasena(bCryptPasswordEncoder.encode(identificacion));
+                usuarioNuevo.setTiposUsuario(tipo);
 
                 Usuario us = usuarioRepo.save(usuarioNuevo);
 

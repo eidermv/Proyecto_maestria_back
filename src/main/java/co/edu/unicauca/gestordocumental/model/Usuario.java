@@ -37,20 +37,19 @@ public class Usuario implements Serializable
     @OneToOne
     @JoinColumn(name = "id_persona")
     private Persona persona;
-    /*
+
     @ManyToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
     @JoinTable(
         name = "grupo_tipo_usuario", 
         joinColumns = { @JoinColumn(name = "usu_id") }, 
         inverseJoinColumns = { @JoinColumn(name = "tipo_usu_id")}
     )
-
     private Set<TipoUsuario> tiposUsuario;
 
     public Usuario() {
         this.tiposUsuario = new HashSet<>();
     }
-*/
+
     public Integer getId() {
         return id;
     }
@@ -89,25 +88,25 @@ public class Usuario implements Serializable
     public void setEstado(Boolean estado) {
         this.estado = estado;
     }
-    /*
+
         public void addTipoUsuario(TipoUsuario tipoUsuario)
         {
-            this.persona.tiposUsuario.add(tipoUsuao);
+            this.tiposUsuario.add(tipoUsuario);
         }
 
         public void setTiposUsuario(Set<TipoUsuario> tiposUsuario) {
-            this.persona.tiposUsuario = tiposUsuario;
+            this.tiposUsuario = tiposUsuario;
         }
 
         public ArrayList getTiposUsuario()
         {
             ArrayList<TipoUsuario> r = new ArrayList();
-            r.addAll(this.persona.tiposUsuario);
+            r.addAll(tiposUsuario);
             return r;
         }
-    */
+
     public Persona getPersona() {
-        return persona;
+        return this.persona;
     }
 
     public void setPersona(Persona persona) {

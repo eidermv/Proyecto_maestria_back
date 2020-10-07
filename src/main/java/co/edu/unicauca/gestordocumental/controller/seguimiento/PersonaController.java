@@ -59,7 +59,7 @@ public class PersonaController {
         String nombreUsuario = claims.getSubject();
         Usuario usuario = usuarioRepo.findByUsuario(nombreUsuario);
 
-        String tipo = ((TipoUsuario)usuario.getPersona().getTiposUsuario().get(0)).getNombre();
+        String tipo = ((TipoUsuario)usuario.getTiposUsuario().get(0)).getNombre();
         rta = new JSONObject();
 
         switch (tipo) {

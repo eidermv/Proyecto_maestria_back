@@ -32,7 +32,7 @@ public class UsuarioServicio implements UserDetailsService
         }
         
         Set<GrantedAuthority> autoridades = new HashSet<>();
-        ArrayList<TipoUsuario> tiposUsuario = usuarioApp.getPersona().getTiposUsuario();
+        ArrayList<TipoUsuario> tiposUsuario = usuarioApp.getTiposUsuario();
         // autoridades.add(new SimpleGrantedAuthority(tiposUsuario.getNombre()));
         tiposUsuario.forEach((tipoUsuario) -> {
             autoridades.add(new SimpleGrantedAuthority(tipoUsuario.getNombre()));

@@ -30,8 +30,8 @@ public class Persona {
     /*@OneToOne
     @JoinColumn(name = "tipo_usu_id")
     private TipoUsuario tipoUsuario;*/
-
-    @ManyToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
+/*
+    @ManyToMany
     @JoinTable(
             name = "grupo_tipo_usuario",
             joinColumns = { @JoinColumn(name = "id_persona") },
@@ -42,7 +42,7 @@ public class Persona {
     public Persona() {
         this.tiposUsuario = new HashSet<>();
     }
-
+*/
 
     public int getIdPersona() {
         return id_persona;
@@ -79,7 +79,7 @@ public class Persona {
     /*public TipoUsuario getTipoUsuario() {
         return tipoUsuario;
     }*/
-
+/*
     public void addTipoUsuario(TipoUsuario tipoUsuario)
     {
         this.tiposUsuario.add(tipoUsuario);
@@ -91,12 +91,13 @@ public class Persona {
 
     public ArrayList getTiposUsuario()
     {
+        System.out.println("rol consultado " + this.tiposUsuario.stream().findFirst().get().getNombre());
         ArrayList<TipoUsuario> r = new ArrayList();
         r.addAll(this.tiposUsuario);
         return r;
     }
 
-    /*public void setTipoUsuario(TipoUsuario tipoUsuario) {
+    public void setTipoUsuario(TipoUsuario tipoUsuario) {
         this.tipoUsuario = tipoUsuario;
     }*/
 }

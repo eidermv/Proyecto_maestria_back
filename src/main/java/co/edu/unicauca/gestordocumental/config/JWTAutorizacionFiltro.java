@@ -58,6 +58,8 @@ public class JWTAutorizacionFiltro extends BasicAuthenticationFilter
                 Arrays.stream(claims.get(ConstantesSeguridad.AUTHORIY_KEY).toString().split(","))
                         .map(SimpleGrantedAuthority::new)
                         .collect(Collectors.toList());
+
+            System.out.println(authorities.stream().findFirst().get().toString());
             
             String user = claims.getSubject();
             

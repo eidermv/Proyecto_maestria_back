@@ -18,4 +18,7 @@ public interface TutorRepo extends CrudRepository<Tutor, Integer>{
 
     @Query("SELECT t FROM Tutor t where t.persona = ?1")
     Tutor buscarPorPersona(Persona persona);
+
+    @Query("SELECT concat(p.nombres, ' ', p.apellidos) as nombre FROM Tutor t, Persona p where t.persona.id_persona = p.id_persona")
+    List<String> listarTodos();
 }
