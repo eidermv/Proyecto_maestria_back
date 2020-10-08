@@ -15,6 +15,7 @@ import co.edu.unicauca.gestordocumental.repo.TipoUsuarioRepo;
 import co.edu.unicauca.gestordocumental.repo.TutorRepo;
 import co.edu.unicauca.gestordocumental.repo.UsuarioRepo;
 import co.edu.unicauca.gestordocumental.repo.seguimiento.*;
+import co.edu.unicauca.gestordocumental.util.ConvertirJson;
 import co.edu.unicauca.gestordocumental.validador.seguimiento.PersonaValidacion;
 import co.edu.unicauca.gestordocumental.validador.seguimiento.SeguimientoValidacion;
 import org.json.JSONObject;
@@ -24,15 +25,16 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import javax.persistence.ColumnResult;
+import java.util.*;
 
 @Controller
 @RequestMapping(path="/seguimiento")
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SeguimientoController {
+
+    private String[] campos = {"id_seguimiento", "codirector","cohorte","nombre","objetivo_general","objetivos_especificos",
+    "id_estado_proyecto","id_estado_seguimiento","id_tipo_seguimiento","est_id","id_tutor"};
 
     @Autowired
     private SeguimientoRepo seguimientoRepo;
@@ -251,14 +253,28 @@ id_estado_seguimiento
 
     @PreAuthorize("hasAuthority('Tutor')")
     @GetMapping(path="/listarPorTutor/{id_tutor}", produces = "application/json")
-    public String listarSeguimientoPorTutor(@PathVariable String id_tutor) {
+    public @ResponseBody String listarSeguimientoPorTutor(@PathVariable String id_tutor) {
         // return tutorRepo.findAllByNombre(nombre);
+        System.out.println("id de tutor " + id_tutor);
         this.rta = new JSONObject();
-        List<Seguimiento> seguimientos = this.seguimientoRepo.seguimientosPorTutos(Integer.parseInt(id_tutor));
+        List<Object[]> seguimientos = this.seguimientoRepo.seguimientosPorTutos(Integer.parseInt(id_tutor));
         if (seguimientos.size() > 0) {
 
+            ConvertirJson cj = new ConvertirJson();
+
+            /*List<String> aux = new ArrayList<>();
+            seguimientos.forEach((item)->{
+                JSONObject objeto = new JSONObject();
+                int i = 0;
+                for (String campo : this.campos) {
+                    objeto.put(campo, item[i]);
+                }
+                aux.add(objeto.toString());
+
+            });*/
+
             rta.put("estado", "exito");
-            rta.put("data", seguimientos);
+            rta.put("data", cj.convertir(this.campos, seguimientos));
             rta.put("mensaje", "Lista de seguimientos por tutor");
 
         } else {
@@ -266,6 +282,8 @@ id_estado_seguimiento
             rta.put("data", "");
             rta.put("mensaje", "No existen seguimientos por tutor");
         }
+
+        System.out.println("final de consulta " + rta.toString());
 
         return rta.toString();
     }

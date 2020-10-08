@@ -8,6 +8,30 @@ import co.edu.unicauca.gestordocumental.model.Tutor;
 
 @Entity
 @Table(name = "seguimiento")
+@SqlResultSetMapping(
+		name="seguimientoPorTutor",
+		columns={
+				@ColumnResult(name="id_seguimiento"),
+				@ColumnResult(name="codirector"),
+				@ColumnResult(name="cohorte"),
+				@ColumnResult(name="nombre"),
+				@ColumnResult(name="objetivo_general"),
+				@ColumnResult(name="objetivos_especificos"),
+				@ColumnResult(name="id_estado_proyecto"),
+				@ColumnResult(name="id_estado_seguimiento"),
+				@ColumnResult(name="id_tipo_seguimiento"),
+				@ColumnResult(name="est_id"),
+				@ColumnResult(name="id_tutor")
+
+
+		}
+		)
+
+@NamedNativeQuery(
+		name = "Seguimiento.seguimientosPorTutos",
+		query = "SELECT id_seguimiento, codirector, cohorte, nombre, objetivo_general, objetivos_especificos, id_estado_proyecto, id_estado_seguimiento, id_tipo_seguimiento, est_id, id_tutor FROM Seguimiento WHERE id_tutor=:id_tutor",
+		resultSetMapping = "seguimientoPorTutor"
+)/**/
 public class Seguimiento {
 /*	id_seguimiento
 	nombre (obligatorio)
