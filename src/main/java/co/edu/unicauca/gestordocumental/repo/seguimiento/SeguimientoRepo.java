@@ -15,6 +15,8 @@ public interface SeguimientoRepo extends JpaRepository<Seguimiento, Integer> {
 
     Void save(Optional<Seguimiento> seguimiento);
 
+    List<Object[]> seguimientos();
+
     // @Query("SELECT s FROM Seguimiento s where s.tutor.id_tutor = ?1")
     List<Object[]> seguimientosPorTutos(Integer id_tutor);
 }

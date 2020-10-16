@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 @Controller
@@ -24,7 +25,7 @@ public class TipoSeguimientoController {
 
     @PreAuthorize("hasAnyAuthority('Cordinador', 'Tutor')")
     @GetMapping(path="/tipos", produces = "application/json")
-    public String listar() {
+    public @ResponseBody String listar() {
         // return tutorRepo.findAllByNombre(nombre);
         this.rta = new JSONObject();
         List<TipoSeguimiento> estados = this.tipoSeguimientoRepo.findAll();

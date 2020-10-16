@@ -73,7 +73,7 @@ id_estado_seguimiento
 
     @PreAuthorize("hasAuthority('Coordinador')")
     @PostMapping(path="/crear", produces = "application/json")
-    public String crearNuevoSeguimiento(
+    public @ResponseBody String crearNuevoSeguimiento(
             @RequestBody Map<String, String> body) {
         // return tutorRepo.findAllByNombre(nombre);
         SeguimientoValidacion seguimientoValidacion = new SeguimientoValidacion();
@@ -138,7 +138,7 @@ id_estado_seguimiento
 
     @PreAuthorize("hasAuthority('Coordinador')")
     @PutMapping(path="/editar", produces = "application/json")
-    public String editarSeguimiento(
+    public @ResponseBody String editarSeguimiento(
             @RequestBody Map<String, String> body) {
         // return tutorRepo.findAllByNombre(nombre);
         SeguimientoValidacion seguimientoValidacion = new SeguimientoValidacion();
@@ -203,7 +203,7 @@ id_estado_seguimiento
     }
 
     @DeleteMapping(path="/eliminar/{id_seguimiento}", produces = "application/json")
-    public String editarTutor(
+    public @ResponseBody String editarTutor(
             @PathVariable String id_seguimiento) {
         this.rta = new JSONObject();
         if (this.tutorRepo.findById(Integer.parseInt(id_seguimiento)).isPresent()) {
@@ -232,16 +232,19 @@ id_estado_seguimiento
 
     @PreAuthorize("hasAuthority('Coordinador')")
     @GetMapping(path="/listar", produces = "application/json")
-    public String listarSeguimientos() {
+    public @ResponseBody String listarSeguimientos() {
         // return tutorRepo.findAllByNombre(nombre);
         this.rta = new JSONObject();
-        List<Seguimiento> seguimientos = (List<Seguimiento>) this.seguimientoRepo.findAll();
+        List<Object[]> seguimientos = this.seguimientoRepo.seguimientos();
+        System.out.println("todos seguimientos " + seguimientos.size());
         if (seguimientos.size() > 0) {
 
-            rta.put("estado", "exito");
-            rta.put("data", seguimientos);
-            rta.put("mensaje", "Lista de seguimientos");
+            ConvertirJson cj = new ConvertirJson();
 
+            rta.put("estado", "exito");
+            rta.put("data", cj.convertir(this.campos, seguimientos));
+            rta.put("mensaje", "Lista de seguimientos");
+            System.out.println("todos seguimientos " + rta.toString());
         } else {
             rta.put("estado", "fallo");
             rta.put("data", "");

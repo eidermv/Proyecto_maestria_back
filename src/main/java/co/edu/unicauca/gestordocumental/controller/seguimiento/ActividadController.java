@@ -48,7 +48,7 @@ visibilidad (si - 1 o no - 0) - para hacer visible al coordinador, por defecto n
 
     @PreAuthorize("hasAuthority('Tutor')")
     @PostMapping(path="/crear", produces = "application/json")
-    public String crearNuevaActividad(
+    public @ResponseBody String crearNuevaActividad(
             @RequestBody Map<String, String> body) {
         // return tutorRepo.findAllByNombre(nombre);
         ActividadValidacion actividadValidacion = new ActividadValidacion();
@@ -110,7 +110,7 @@ visibilidad (si - 1 o no - 0) - para hacer visible al coordinador, por defecto n
 
     @PreAuthorize("hasAuthority('Tutor')")
     @PutMapping(path="/editar", produces = "application/json")
-    public String editarActividad(
+    public @ResponseBody String editarActividad(
             @RequestBody Map<String, String> body) {
         // return tutorRepo.findAllByNombre(nombre);
         ActividadValidacion actividadValidacion = new ActividadValidacion();
@@ -172,7 +172,7 @@ visibilidad (si - 1 o no - 0) - para hacer visible al coordinador, por defecto n
     }
 
     @DeleteMapping(path="/eliminar/{id_actividad}", produces = "application/json")
-    public String eliminarActividad(
+    public @ResponseBody String eliminarActividad(
             @PathVariable String id_actividad) {
         this.rta = new JSONObject();
         if (this.actividadRepo.findById(Integer.parseInt(id_actividad)).isPresent()) {
@@ -201,7 +201,7 @@ visibilidad (si - 1 o no - 0) - para hacer visible al coordinador, por defecto n
 
     @PreAuthorize("hasAuthority('Tutor')")
     @GetMapping(path="/listarPorSeguimiento/{id_seguimiento}", produces = "application/json")
-    public String listarPorSeguimiento(@PathVariable String id_seguimiento) {
+    public @ResponseBody String listarPorSeguimiento(@PathVariable String id_seguimiento) {
         // return tutorRepo.findAllByNombre(nombre);
         this.rta = new JSONObject();
         List<Actividad> actividades = this.actividadRepo.listarActividadPorSeguimiento(Integer.parseInt(id_seguimiento));
@@ -222,7 +222,7 @@ visibilidad (si - 1 o no - 0) - para hacer visible al coordinador, por defecto n
 
     @PreAuthorize("hasAuthority('Coordinador')")
     @GetMapping(path="/listarPorVisibilidad/{id_seguimiento}", produces = "application/json")
-    public String listarPorVisibilidad(@PathVariable String id_seguimiento) {
+    public @ResponseBody String listarPorVisibilidad(@PathVariable String id_seguimiento) {
         // return tutorRepo.findAllByNombre(nombre);
         this.rta = new JSONObject();
         List<Actividad> actividades = this.actividadRepo.listarActividadPorSeguimientoVisible(Integer.parseInt(id_seguimiento));
@@ -243,7 +243,7 @@ visibilidad (si - 1 o no - 0) - para hacer visible al coordinador, por defecto n
 
     @PreAuthorize("hasAuthority('Tutor')")
     @PostMapping(path="/visibilidad", produces = "application/json")
-    public String cambiarVisibilidad(@RequestBody Map<String, String> body) {
+    public @ResponseBody String cambiarVisibilidad(@RequestBody Map<String, String> body) {
         // return tutorRepo.findAllByNombre(nombre);
         this.rta = new JSONObject();
 

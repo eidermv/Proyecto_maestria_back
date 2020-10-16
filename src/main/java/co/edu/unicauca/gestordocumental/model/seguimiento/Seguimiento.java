@@ -31,7 +31,13 @@ import co.edu.unicauca.gestordocumental.model.Tutor;
 		name = "Seguimiento.seguimientosPorTutos",
 		query = "SELECT id_seguimiento, codirector, cohorte, nombre, objetivo_general, objetivos_especificos, id_estado_proyecto, id_estado_seguimiento, id_tipo_seguimiento, est_id, id_tutor FROM Seguimiento WHERE id_tutor=:id_tutor",
 		resultSetMapping = "seguimientoPorTutor"
-)/**/
+)
+@NamedNativeQuery(
+		name = "Seguimiento.seguimientos",
+		query = "SELECT id_seguimiento, codirector, cohorte, nombre, objetivo_general, objetivos_especificos, id_estado_proyecto, id_estado_seguimiento, id_tipo_seguimiento, est_id, id_tutor FROM Seguimiento",
+		resultSetMapping = "seguimientoPorTutor"
+)
+/**/
 public class Seguimiento {
 /*	id_seguimiento
 	nombre (obligatorio)

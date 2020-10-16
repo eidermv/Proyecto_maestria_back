@@ -46,8 +46,7 @@ public class PersonaController {
     // buscar en el front donde se llama esta api ---------------------------------------
     @PreAuthorize("hasAnyAuthority('Estudiante', 'Tutor')")
     @GetMapping(path="/buscar/token/{token}")
-    public @ResponseBody
-    String getEstudianteYTutorByToken(
+    public @ResponseBody String getEstudianteYTutorByToken(
             @PathVariable String token) {
 
         Claims claims = (Claims) Jwts.parser()

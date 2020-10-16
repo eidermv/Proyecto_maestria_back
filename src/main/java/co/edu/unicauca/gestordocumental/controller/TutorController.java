@@ -73,7 +73,7 @@ public class TutorController {
 
     @PreAuthorize("hasAuthority('Coordinador')")
     @PostMapping(path="/crear", produces = "application/json")
-    public String crearNuevoTutor(
+    public @ResponseBody String crearNuevoTutor(
             @RequestBody Map<String, String> body) {
         // return tutorRepo.findAllByNombre(nombre);
         PersonaValidacion tutorV = new PersonaValidacion();
@@ -155,7 +155,7 @@ public class TutorController {
 
     @PreAuthorize("hasAuthority('Coordinador')")
     @PutMapping(path="/editar", produces = "application/json")
-    public String editarTutor(
+    public @ResponseBody String editarTutor(
             @RequestBody Map<String, String> body) {
         // return tutorRepo.findAllByNombre(nombre);
         PersonaValidacion tutorV = new PersonaValidacion();
@@ -238,7 +238,7 @@ public class TutorController {
 
     @PreAuthorize("hasAuthority('Coordinador')")
     @DeleteMapping(path="/eliminar/{id_tutor}", produces = "application/json")
-    public String eliminarTutor(
+    public @ResponseBody String eliminarTutor(
             @PathVariable String id_tutor) {
         // return tutorRepo.findAllByNombre(nombre);
         this.rta = new JSONObject();
@@ -273,7 +273,7 @@ public class TutorController {
 
     @PreAuthorize("hasAuthority('Coordinador')")
     @GetMapping(path="/listar", produces = "application/json")
-    public String listarTutor() {
+    public @ResponseBody String listarTutor() {
         // return tutorRepo.findAllByNombre(nombre);
         this.rta = new JSONObject();
         List<Tutor> tutores = (List<Tutor>) this.tutorRepo.findAll();
