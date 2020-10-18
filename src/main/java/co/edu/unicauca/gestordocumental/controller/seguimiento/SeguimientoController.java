@@ -34,7 +34,7 @@ import java.util.*;
 public class SeguimientoController {
 
     private String[] campos = {"id_seguimiento", "codirector","cohorte","nombre","objetivo_general","objetivos_especificos",
-    "id_estado_proyecto","id_estado_seguimiento","id_tipo_seguimiento","est_id","id_tutor"};
+    "estado_proyecto","estado_seguimiento","tipo_seguimiento","estudiante","tutor"};
 
     @Autowired
     private SeguimientoRepo seguimientoRepo;

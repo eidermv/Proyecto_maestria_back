@@ -11,17 +11,17 @@ import co.edu.unicauca.gestordocumental.model.Tutor;
 @SqlResultSetMapping(
 		name="seguimientoPorTutor",
 		columns={
-				@ColumnResult(name="id_seguimiento"),
-				@ColumnResult(name="codirector"),
-				@ColumnResult(name="cohorte"),
-				@ColumnResult(name="nombre"),
-				@ColumnResult(name="objetivo_general"),
-				@ColumnResult(name="objetivos_especificos"),
-				@ColumnResult(name="id_estado_proyecto"),
-				@ColumnResult(name="id_estado_seguimiento"),
-				@ColumnResult(name="id_tipo_seguimiento"),
-				@ColumnResult(name="est_id"),
-				@ColumnResult(name="id_tutor")
+				@ColumnResult(name="s.id_seguimiento"),
+				@ColumnResult(name="s.codirector"),
+				@ColumnResult(name="s.cohorte"),
+				@ColumnResult(name="s.nombre"),
+				@ColumnResult(name="s.objetivo_general"),
+				@ColumnResult(name="s.objetivos_especificos"),
+				@ColumnResult(name="ep.nombre"),
+				@ColumnResult(name="es.nombre"),
+				@ColumnResult(name="ts.nombre"),
+				@ColumnResult(name="estudiante"),
+				@ColumnResult(name="tutor")
 
 
 		}
@@ -29,12 +29,16 @@ import co.edu.unicauca.gestordocumental.model.Tutor;
 
 @NamedNativeQuery(
 		name = "Seguimiento.seguimientosPorTutos",
-		query = "SELECT id_seguimiento, codirector, cohorte, nombre, objetivo_general, objetivos_especificos, id_estado_proyecto, id_estado_seguimiento, id_tipo_seguimiento, est_id, id_tutor FROM Seguimiento WHERE id_tutor=:id_tutor",
+		query = "SELECT s.id_seguimiento, s.codirector, s.cohorte, s.nombre, s.objetivo_general, s.objetivos_especificos, ep.nombre, es.nombre, ts.nombre, concat(e.est_nombres, ' ', e.est_apellidos) as estudiante, concat(t.nombres, ' ', t.apellidos) as tutor " +
+				"FROM seguimiento s, tutor t, estado_proyecto ep, estado_seguimiento es, tipo_seguimiento ts, estudiante e " +
+				"WHERE s.id_estado_proyecto = ep.id_estado_proyecto and s.id_estado_seguimiento = es.id_estado_seguimiento and s.id_tipo_seguimiento = ts.id_tipo_seguimientor and s.est_id = e.est_id and s.id_tutor = t.id_tutor and s.id_tutor=:id_tutor",
 		resultSetMapping = "seguimientoPorTutor"
 )
 @NamedNativeQuery(
 		name = "Seguimiento.seguimientos",
-		query = "SELECT id_seguimiento, codirector, cohorte, nombre, objetivo_general, objetivos_especificos, id_estado_proyecto, id_estado_seguimiento, id_tipo_seguimiento, est_id, id_tutor FROM Seguimiento",
+		query = "SELECT s.id_seguimiento, s.codirector, s.cohorte, s.nombre, s.objetivo_general, s.objetivos_especificos, ep.nombre, es.nombre, ts.nombre, concat(e.est_nombres, ' ', e.est_apellidos) as estudiante, concat(t.nombres, ' ', t.apellidos) as tutor " +
+				"FROM seguimiento s, tutor t, estado_proyecto ep, estado_seguimiento es, tipo_seguimiento ts, estudiante e " +
+				"WHERE s.id_estado_proyecto = ep.id_estado_proyecto and s.id_estado_seguimiento = es.id_estado_seguimiento and s.id_tipo_seguimiento = ts.id_tipo_seguimientor and s.est_id = e.est_id and s.id_tutor = t.id_tutor",
 		resultSetMapping = "seguimientoPorTutor"
 )
 /**/
