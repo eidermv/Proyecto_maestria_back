@@ -7,8 +7,8 @@ import java.util.List;
 
 public class ConvertirJson {
 
-    public List<String> convertir(String[] campos, List<Object[]> valores){
-        List<String> aux = new ArrayList<>();
+    public List<JSONObject> convertir(String[] campos, List<Object[]> valores){
+        List<JSONObject> aux = new ArrayList<>();
         valores.forEach((item)->{
             JSONObject objeto = new JSONObject();
             int i = 0;
@@ -16,7 +16,7 @@ public class ConvertirJson {
                 objeto.put(campo, item[i]);
                 i++;
             }
-            aux.add(objeto.toString());
+            aux.add(objeto);
 
         });
         return aux;
