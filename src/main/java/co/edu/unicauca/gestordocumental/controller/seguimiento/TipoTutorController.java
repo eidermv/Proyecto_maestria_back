@@ -26,7 +26,7 @@ public class TipoTutorController {
 
     JSONObject rta = new JSONObject();
 
-    @PreAuthorize("hasAnyAuthority('Cordinador')")
+    @PreAuthorize("hasAnyAuthority('Coordinador')")
     @GetMapping(path="/tipos", produces = "application/json")
     public @ResponseBody String listar() {
         // return tutorRepo.findAllByNombre(nombre);

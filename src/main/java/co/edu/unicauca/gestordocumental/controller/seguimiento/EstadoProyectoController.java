@@ -25,7 +25,7 @@ public class EstadoProyectoController {
 
     JSONObject rta = new JSONObject();
 
-    @PreAuthorize("hasAnyAuthority('Cordinador', 'Tutor')")
+    @PreAuthorize("hasAnyAuthority('Coordinador', 'Tutor')")
     @GetMapping(path="/estados", produces = "application/json")
     public @ResponseBody String listar() {
         // return tutorRepo.findAllByNombre(nombre);

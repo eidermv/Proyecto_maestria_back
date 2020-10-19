@@ -23,7 +23,7 @@ public class TipoSeguimientoController {
 
     JSONObject rta = new JSONObject();
 
-    @PreAuthorize("hasAnyAuthority('Cordinador', 'Tutor')")
+    @PreAuthorize("hasAnyAuthority('Coordinador', 'Tutor')")
     @GetMapping(path="/tipos", produces = "application/json")
     public @ResponseBody String listar() {
         // return tutorRepo.findAllByNombre(nombre);
