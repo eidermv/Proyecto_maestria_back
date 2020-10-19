@@ -19,4 +19,6 @@ public interface SeguimientoRepo extends JpaRepository<Seguimiento, Integer> {
 
     // @Query("SELECT s FROM Seguimiento s where s.tutor.id_tutor = ?1")
     List<Object[]> seguimientosPorTutos(Integer id_tutor);
+
+    List<Object[]> seguimientosPorEstudiante(Integer id_estudiante);
 }

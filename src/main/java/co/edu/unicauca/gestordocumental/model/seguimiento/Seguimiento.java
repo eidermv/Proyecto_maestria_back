@@ -35,6 +35,13 @@ import co.edu.unicauca.gestordocumental.model.Tutor;
 		resultSetMapping = "seguimientoPorTutor"
 )
 @NamedNativeQuery(
+		name = "Seguimiento.seguimientosPorEstudiante",
+		query = "SELECT s.id_seguimiento, s.codirector, s.cohorte, s.nombre, s.objetivo_general, s.objetivos_especificos, ep.nombre, es.nombre, ts.nombre, concat(e.est_nombres, ' ', e.est_apellidos) as estudiante, concat(t.nombres, ' ', t.apellidos) as tutor " +
+				"FROM seguimiento s, tutor t, estado_proyecto ep, estado_seguimiento es, tipo_seguimiento ts, estudiante e " +
+				"WHERE s.id_estado_proyecto = ep.id_estado_proyecto and s.id_estado_seguimiento = es.id_estado_seguimiento and s.id_tipo_seguimiento = ts.id_tipo_seguimientor and s.est_id = e.est_id and s.id_tutor = t.id_tutor and s.est_id=:id_estudiante",
+		resultSetMapping = "seguimientoPorTutor"
+)
+@NamedNativeQuery(
 		name = "Seguimiento.seguimientos",
 		query = "SELECT s.id_seguimiento, s.codirector, s.cohorte, s.nombre, s.objetivo_general, s.objetivos_especificos, ep.nombre, es.nombre, ts.nombre, concat(e.est_nombres, ' ', e.est_apellidos) as estudiante, concat(t.nombres, ' ', t.apellidos) as tutor " +
 				"FROM seguimiento s, tutor t, estado_proyecto ep, estado_seguimiento es, tipo_seguimiento ts, estudiante e " +

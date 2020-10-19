@@ -290,4 +290,41 @@ id_estado_seguimiento
 
         return rta.toString();
     }
+
+    @PreAuthorize("hasAuthority('Estudiante')")
+    @GetMapping(path="/listarPorEstudiante/{id_estudiante}", produces = "application/json")
+    public @ResponseBody String listarSeguimientoPorEstudiante(@PathVariable String id_estudiante) {
+        // return tutorRepo.findAllByNombre(nombre);
+        System.out.println("id de tutor " + id_estudiante);
+        this.rta = new JSONObject();
+        List<Object[]> seguimientos = this.seguimientoRepo.seguimientosPorEstudiante(Integer.parseInt(id_estudiante));
+        if (seguimientos.size() > 0) {
+
+            ConvertirJson cj = new ConvertirJson();
+
+            /*List<String> aux = new ArrayList<>();
+            seguimientos.forEach((item)->{
+                JSONObject objeto = new JSONObject();
+                int i = 0;
+                for (String campo : this.campos) {
+                    objeto.put(campo, item[i]);
+                }
+                aux.add(objeto.toString());
+
+            });*/
+
+            rta.put("estado", "exito");
+            rta.put("data", cj.convertir(this.campos, seguimientos));
+            rta.put("mensaje", "Lista de seguimientos por tutor");
+
+        } else {
+            rta.put("estado", "fallo");
+            rta.put("data", "");
+            rta.put("mensaje", "No existen seguimientos por tutor");
+        }
+
+        System.out.println("final de consulta " + rta.toString());
+
+        return rta.toString();
+    }
 }
