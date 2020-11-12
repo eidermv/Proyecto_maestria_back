@@ -37,7 +37,7 @@ import java.util.List;
 				"WHERE s.id_estado_proyecto = ep.id_estado_proyecto and s.id_estado_seguimiento = es.id_estado_seguimiento and s.id_tipo_seguimiento = ts.id_tipo_seguimientor and s.est_id = e.est_id and s.id_tutor = t.id_tutor and s.id_tutor=:id_tutor",
 		resultSetMapping = "seguimientoPorTutor"
 )
-@NamedNativeQuery(
+/*@NamedNativeQuery(
 		name = "Seguimiento.seguimientosPorEstudiante",
 		query = "SELECT s.id_seguimiento, s.codirector, s.cohorte, s.nombre, s.objetivo_general, s.objetivos_especificos, ep.nombre, es.nombre, ts.nombre, concat(e.est_nombres, ' ', e.est_apellidos) as estudiante, concat(t.nombres, ' ', t.apellidos) as tutor " +
 				"FROM seguimiento s, tutor t, estado_proyecto ep, estado_seguimiento es, tipo_seguimiento ts, estudiante e " +
@@ -50,7 +50,7 @@ import java.util.List;
 				"FROM seguimiento s, tutor t, estado_proyecto ep, estado_seguimiento es, tipo_seguimiento ts, estudiante e " +
 				"WHERE s.id_estado_proyecto = ep.id_estado_proyecto and s.id_estado_seguimiento = es.id_estado_seguimiento and s.id_tipo_seguimiento = ts.id_tipo_seguimientor and s.est_id = e.est_id and s.id_tutor = t.id_tutor",
 		resultSetMapping = "seguimientoPorTutor"
-)
+)*/
 /**/
 public class Seguimiento {
 /*	id_seguimiento
@@ -99,7 +99,7 @@ public class Seguimiento {
     private String objetivos_especificos;
 
 	@JsonIgnore
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "seguimiento")
+	@OneToMany(cascade = CascadeType.ALL)
 	private List<Actividad> actividades;
     
     @OneToOne

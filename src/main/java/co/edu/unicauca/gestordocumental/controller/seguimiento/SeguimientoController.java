@@ -33,8 +33,8 @@ import java.util.*;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SeguimientoController {
 
-    private String[] campos = {"id_seguimiento", "codirector","cohorte","nombre","objetivo_general","objetivos_especificos",
-    "estado_proyecto","estado_seguimiento","tipo_seguimiento","estudiante","tutor"};
+    /*private String[] campos = {"id_seguimiento", "codirector","cohorte","nombre","objetivo_general","objetivos_especificos",
+    "estado_proyecto","estado_seguimiento","tipo_seguimiento","estudiante","tutor"};*/
 
     @Autowired
     private SeguimientoRepo seguimientoRepo;
@@ -235,14 +235,16 @@ id_estado_seguimiento
     public @ResponseBody String listarSeguimientos() {
         // return tutorRepo.findAllByNombre(nombre);
         this.rta = new JSONObject();
-        List<Object[]> seguimientos = this.seguimientoRepo.seguimientos();
+        // List<Object[]> seguimientos = this.seguimientoRepo.seguimientos();
+        List<Seguimiento> seguimientos = this.seguimientoRepo.seguimientos();
         System.out.println("todos seguimientos " + seguimientos.size());
         if (seguimientos.size() > 0) {
 
-            ConvertirJson cj = new ConvertirJson();
+            // ConvertirJson cj = new ConvertirJson();
 
             rta.put("estado", "exito");
-            rta.put("data", cj.convertir(this.campos, seguimientos));
+            // rta.put("data", cj.convertir(this.campos, seguimientos));
+            rta.put("data", seguimientos);
             rta.put("mensaje", "Lista de seguimientos");
             System.out.println("todos seguimientos " + rta.toString());
         } else {
@@ -260,10 +262,11 @@ id_estado_seguimiento
         // return tutorRepo.findAllByNombre(nombre);
         System.out.println("id de tutor " + id_tutor);
         this.rta = new JSONObject();
-        List<Object[]> seguimientos = this.seguimientoRepo.seguimientosPorTutos(Integer.parseInt(id_tutor));
+        // List<Object[]> seguimientos = this.seguimientoRepo.seguimientosPorTutos(Integer.parseInt(id_tutor));
+        List<Seguimiento> seguimientos = this.seguimientoRepo.seguimientosPorTutor(Integer.parseInt(id_tutor));
         if (seguimientos.size() > 0) {
 
-            ConvertirJson cj = new ConvertirJson();
+            // ConvertirJson cj = new ConvertirJson();
 
             /*List<String> aux = new ArrayList<>();
             seguimientos.forEach((item)->{
@@ -277,7 +280,8 @@ id_estado_seguimiento
             });*/
 
             rta.put("estado", "exito");
-            rta.put("data", cj.convertir(this.campos, seguimientos));
+            // rta.put("data", cj.convertir(this.campos, seguimientos));
+            rta.put("data", seguimientos);
             rta.put("mensaje", "Lista de seguimientos por tutor");
 
         } else {
@@ -297,10 +301,12 @@ id_estado_seguimiento
         // return tutorRepo.findAllByNombre(nombre);
         System.out.println("id de tutor " + id_estudiante);
         this.rta = new JSONObject();
-        List<Object[]> seguimientos = this.seguimientoRepo.seguimientosPorEstudiante(Integer.parseInt(id_estudiante));
+        // List<Object[]> seguimientos = this.seguimientoRepo.seguimientosPorEstudiante(Integer.parseInt(id_estudiante));
+        List<Seguimiento> seguimientos = this.seguimientoRepo.seguimientosPorEstudiante(Integer.parseInt(id_estudiante));
+
         if (seguimientos.size() > 0) {
 
-            ConvertirJson cj = new ConvertirJson();
+            // ConvertirJson cj = new ConvertirJson();
 
             /*List<String> aux = new ArrayList<>();
             seguimientos.forEach((item)->{
@@ -314,7 +320,9 @@ id_estado_seguimiento
             });*/
 
             rta.put("estado", "exito");
-            rta.put("data", cj.convertir(this.campos, seguimientos));
+            // rta.put("data", cj.convertir(this.campos, seguimientos));
+            rta.put("data", seguimientos);
+
             rta.put("mensaje", "Lista de seguimientos por tutor");
 
         } else {
