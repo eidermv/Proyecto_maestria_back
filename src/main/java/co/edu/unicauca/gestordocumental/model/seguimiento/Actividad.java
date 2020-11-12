@@ -1,13 +1,6 @@
 package co.edu.unicauca.gestordocumental.model.seguimiento;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
@@ -53,8 +46,8 @@ visibilidad (si - 1 o no - 0) - para hacer visible al coordinador, por defecto n
 	// 0 - no, 1 - si
 	@Column(name = "cumplida")
     private int cumplida;
-	
-	@OneToOne
+
+	@ManyToOne
     @JoinColumn(name="id_seguimiento")
     private Seguimiento seguimiento;
 	

@@ -225,6 +225,7 @@ visibilidad (si - 1 o no - 0) - para hacer visible al coordinador, por defecto n
     public @ResponseBody String listarPorVisibilidad(@PathVariable String id_seguimiento) {
         // return tutorRepo.findAllByNombre(nombre);
         this.rta = new JSONObject();
+        System.out.println("entra a cargar por visibilidad");
         List<Actividad> actividades = this.actividadRepo.listarActividadPorSeguimientoVisible(Integer.parseInt(id_seguimiento));
         if (actividades.size() > 0) {
 
@@ -237,6 +238,8 @@ visibilidad (si - 1 o no - 0) - para hacer visible al coordinador, por defecto n
             rta.put("data", "");
             rta.put("mensaje", "No existen actividades visibles");
         }
+
+        System.out.println("responde a coordinador");
 
         return rta.toString();
     }

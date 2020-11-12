@@ -101,9 +101,11 @@ public class Estudiante implements Serializable {
     /**
      * El tutor del estudiante
      */
-    @ManyToOne
+    @ManyToOne(
+            fetch = FetchType.LAZY
+    )
     private Tutor tutor;
-    
+
     /**
      * El usuario con el que accede al sistema el estudiante
 

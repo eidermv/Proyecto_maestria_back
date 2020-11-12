@@ -5,6 +5,9 @@ import javax.validation.constraints.NotNull;
 
 import co.edu.unicauca.gestordocumental.model.Estudiante;
 import co.edu.unicauca.gestordocumental.model.Tutor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import java.util.List;
 
 @Entity
 @Table(name = "seguimiento")
@@ -70,7 +73,7 @@ public class Seguimiento {
     @NotNull
     private String nombre;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_tutor")
     private Tutor tutor;
 
@@ -81,7 +84,7 @@ public class Seguimiento {
 	@JoinColumn(name = "id_tutor_codirector")
 	private Tutor codirector;
     */
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "est_id")
     private Estudiante estudiante;
 
@@ -94,6 +97,10 @@ public class Seguimiento {
     
     @Column(name = "objetivos_especificos")
     private String objetivos_especificos;
+
+	@JsonIgnore
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "seguimiento")
+	private List<Actividad> actividades;
     
     @OneToOne
     @JoinColumn(name = "id_estado_proyecto")

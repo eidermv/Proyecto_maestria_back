@@ -66,7 +66,7 @@ public class Tutor implements Serializable {
     private String universidad;
     
     @JsonIgnore
-    @OneToMany(mappedBy = "tutor")
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Estudiante> estudiantes;
     /*
     @JsonIgnore
