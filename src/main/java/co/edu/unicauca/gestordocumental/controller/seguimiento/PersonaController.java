@@ -22,6 +22,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.AbstractList;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -56,20 +59,26 @@ public class PersonaController {
 
 
         String nombreUsuario = claims.getSubject();
+
         Usuario usuario = usuarioRepo.findByUsuario(nombreUsuario);
 
+        // System.out.println("------------------ este se logeo nombre " + usuario.getPersona().getIdPersona());
         String tipo = ((TipoUsuario)usuario.getTiposUsuario().get(0)).getNombre();
+        // System.out.println("------------------ este se logeo tipo " + tipo);
         rta = new JSONObject();
 
         switch (tipo) {
             case "Estudiante" -> {
-                Estudiante estudiante = estudianteRepo.buscarPorPersona(usuario.getPersona());
+                List<Estudiante> estudiante = new ArrayList<Estudiante>();
+                estudiante.add(estudianteRepo.buscarPorPersona(usuario.getPersona()));
                 rta.put("estado", "exito");
                 rta.put("data", estudiante);
                 rta.put("mensaje", "Estudiante token correctamente");
             }
             case "Tutor" -> {
-                Tutor tutor = tutorRepo.buscarPorPersona(usuario.getPersona());
+                List<Tutor> tutor = new ArrayList<Tutor>();
+                tutor.add(tutorRepo.buscarPorPersona(usuario.getPersona().getIdPersona()));
+                // System.out.println("------------------ este se logeo TUTOR " + tutor.size());
                 rta.put("estado", "exito");
                 rta.put("data", tutor);
                 rta.put("mensaje", "Tutor token correctamente");
