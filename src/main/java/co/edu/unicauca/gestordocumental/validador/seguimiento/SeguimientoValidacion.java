@@ -36,11 +36,11 @@ id_estado_seguimiento
 
      */
 
-    public String SeguimientoValidacionCrear(Map<String, String> body) {
-        String nombre = body.get("nombre");
-        String id_tutor = body.get("id_tutor");
-        String id_estudiante = body.get("id_estudiante");
-        String objetivos = body.get("objetivos");
+    public String SeguimientoValidacionCrear(Map<String, Object> body) {
+        String nombre = body.get("nombre").toString();
+        String id_tutor = body.get("id_tutor").toString();
+        String id_estudiante = body.get("id_estudiante").toString();
+        String objetivos = body.get("objetivos").toString();
 
         if (objetivos == null) {
             return "Objetivo es obligatorio";
@@ -67,12 +67,12 @@ id_estado_seguimiento
         return "";
     }
 
-    public String SeguimientoValidacionEditar(Map<String, String> body) {
-        String id_seguimiento = body.get("id_seguimiento");
-        String nombre = body.get("nombre");
-        String id_tutor = body.get("id_tutor");
-        String id_estudiante = body.get("id_estudiante");
-        String objetivos = body.get("objetivos");
+    public String SeguimientoValidacionEditar(Map<String, Object> body) {
+        String id_seguimiento = body.get("idSeguimiento").toString();
+        String nombre = body.get("nombre").toString();
+        String id_tutor = body.get("id_tutor").toString();
+        String id_estudiante = body.get("id_estudiante").toString();
+        String objetivos = body.get("objetivoGeneral").toString();
 
         if (seguimientoRepo.findById(Integer.parseInt(id_seguimiento)).isEmpty()) {
             return "Seguimiento no existe";

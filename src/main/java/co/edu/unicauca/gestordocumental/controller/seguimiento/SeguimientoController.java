@@ -20,9 +20,12 @@ import co.edu.unicauca.gestordocumental.validador.seguimiento.PersonaValidacion;
 import co.edu.unicauca.gestordocumental.validador.seguimiento.SeguimientoValidacion;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.ColumnResult;
@@ -74,22 +77,22 @@ id_estado_seguimiento
     @PreAuthorize("hasAuthority('Coordinador')")
     @PostMapping(path="/crear", produces = "application/json")
     public @ResponseBody String crearNuevoSeguimiento(
-            @RequestBody Map<String, String> body) {
+            @RequestBody Map<String, Object> body) {
         // return tutorRepo.findAllByNombre(nombre);
         SeguimientoValidacion seguimientoValidacion = new SeguimientoValidacion();
         String validacion = seguimientoValidacion.SeguimientoValidacionCrear(body);
         if (!validacion.equals("")) {
 
-            String nombre = body.get("nombre");
-            String id_tutor = body.get("id_tutor");
-            String codirector = body.get("codirector");
-            String id_estudiante = body.get("id_estudiante");
-            String objetivos = body.get("objetivos");
+            String nombre = body.get("nombre").toString();
+            String id_tutor = body.get("id_tutor").toString();
+            String codirector = body.get("codirector").toString();
+            String id_estudiante = body.get("id_estudiante").toString();
+            String objetivos = body.get("objetivoGeneral").toString();
 
-            String objetivos_especificos = body.get("objetivos_especificos");
-            String id_estado_proyecto = body.get("id_estado_proyecto");
-            String id_tipo_seguimiento = body.get("id_tipo_seguimiento");
-            String id_estado_seguimiento = body.get("id_estado_seguimiento");
+            String objetivos_especificos = body.get("objetivosEspecificos").toString();
+            String id_estado_proyecto = body.get("id_estado_proyecto").toString();
+            String id_tipo_seguimiento = body.get("id_tipo_seguimiento").toString();
+            String id_estado_seguimiento = body.get("id_estado_seguimiento").toString();
 
 
             this.rta = new JSONObject();
@@ -136,26 +139,31 @@ id_estado_seguimiento
         return rta.toString();
     }
 
-    @PreAuthorize("hasAuthority('Coordinador')")
-    @PutMapping(path="/editar", produces = "application/json")
-    public @ResponseBody String editarSeguimiento(
-            @RequestBody Map<String, String> body) {
+    @PreAuthorize("hasAnyAuthority('Coordinador', 'Tutor')")
+    @PutMapping(path="/editar/{id}", produces = "application/json")
+    @Transactional
+    public @ResponseBody String editar(
+            @PathVariable String id,
+            @RequestBody Map<String, Object> body) {
         // return tutorRepo.findAllByNombre(nombre);
         SeguimientoValidacion seguimientoValidacion = new SeguimientoValidacion();
         String validacion = seguimientoValidacion.SeguimientoValidacionEditar(body);
+        System.out.println(" --------validacion " + validacion);
         if (!validacion.equals("")) {
 
-            String id_seguimiento = body.get("id_seguimiento");
-            String nombre = body.get("nombre");
-            String id_tutor = body.get("id_tutor");
-            String codirector = body.get("codirector");
-            String id_estudiante = body.get("id_estudiante");
-            String objetivos = body.get("objetivos");
+            String id_seguimiento = id;
+            String nombre = body.get("nombre").toString();
+            String id_tutor = body.get("id_tutor").toString();
+            String codirector = body.get("codirector").toString();
+            String id_estudiante = body.get("id_estudiante").toString();
+            String objetivos = body.get("objetivoGeneral").toString();
 
-            String objetivos_especificos = body.get("objetivos_especificos");
-            String id_estado_proyecto = body.get("id_estado_proyecto");
-            String id_tipo_seguimiento = body.get("id_tipo_seguimiento");
-            String id_estado_seguimiento = body.get("id_estado_seguimiento");
+            String objetivos_especificos = body.get("objetivosEspecificos").toString();
+            String id_estado_proyecto = body.get("idEstadoProyecto").toString();
+            String id_tipo_seguimiento = body.get("idTipoSeguimiento").toString();
+            String id_estado_seguimiento = body.get("idEstadoSeguimiento").toString();
+
+            System.out.println(" -------- " + id_tipo_seguimiento);
 
 
             this.rta = new JSONObject();
@@ -165,6 +173,8 @@ id_estado_seguimiento
             EstadoProyecto estadoProyecto = estadoProyectoRepo.findById(Integer.parseInt(id_estado_proyecto)).get();
             Estudiante estudiante = estudianteRepo.findById(Integer.parseInt(id_estudiante));
             Tutor tutor = tutorRepo.findById(Integer.parseInt(id_tutor)).get();
+
+            System.out.println(" --------tutor " + tutor.getNombre());
 
             seguimientoNuevo.setTutor(tutor);
             seguimientoNuevo.setEstudiante(estudiante);
@@ -206,15 +216,23 @@ id_estado_seguimiento
     public @ResponseBody String editarTutor(
             @PathVariable String id_seguimiento) {
         this.rta = new JSONObject();
-        if (this.tutorRepo.findById(Integer.parseInt(id_seguimiento)).isPresent()) {
+        if (this.seguimientoRepo.existsById(Integer.parseInt(id_seguimiento))) {
 
             Seguimiento seguimiento = this.seguimientoRepo.findById(Integer.parseInt(id_seguimiento)).get();
 
             try {
-                this.seguimientoRepo.deleteById(seguimiento.getIdSeguimiento());
-                rta.put("estado", "exito");
-                rta.put("data", "");
-                rta.put("mensaje", "Seguimiento se elimino correctamente");
+                int valor = this.seguimientoRepo.eliminarPorId(Integer.parseInt(id_seguimiento));
+                // System.out.println(" ----- " + valor);
+                if (valor == 1) {
+                    rta.put("estado", "exito");
+                    rta.put("data", "");
+                    rta.put("mensaje", "Seguimiento se elimino correctamente");
+                } else {
+                    rta.put("estado", "fallo");
+                    rta.put("data", "");
+                    rta.put("mensaje", "Fallo eliminando seguimiento");
+                }
+
             } catch (Exception e) {
                 rta.put("estado", "fallo");
                 rta.put("data", "");
