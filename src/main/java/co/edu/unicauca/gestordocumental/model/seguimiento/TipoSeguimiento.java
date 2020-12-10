@@ -1,5 +1,7 @@
 package co.edu.unicauca.gestordocumental.model.seguimiento;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,8 +13,10 @@ import javax.persistence.Table;
 @Table (name = "tipo_seguimiento")
 public class TipoSeguimiento {
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id_tipo_seguimientor")
+    @Column(name="id_tipo_seguimiento", updatable = false, unique = true)
+	// @GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.AUTO, generator="native")
+	@GenericGenerator(name="native",strategy="native")
     private int id_tipo_seguimiento;
 	
 	@Column(name = "nombre")

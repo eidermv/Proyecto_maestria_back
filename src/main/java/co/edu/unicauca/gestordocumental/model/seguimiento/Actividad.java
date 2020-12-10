@@ -1,6 +1,7 @@
 package co.edu.unicauca.gestordocumental.model.seguimiento;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -23,8 +24,10 @@ visibilidad (si - 1 o no - 0) - para hacer visible al coordinador, por defecto n
  */
 	
 	@Id
-    @Column(name = "id_actividad")
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @Column(name = "id_actividad", updatable = false, unique = true)
+	// @GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.AUTO, generator="native")
+	@GenericGenerator(name="native",strategy="native")
     @NotNull
     private int id_actividad;
 	

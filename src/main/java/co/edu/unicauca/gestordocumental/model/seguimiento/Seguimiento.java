@@ -6,6 +6,7 @@ import javax.validation.constraints.NotNull;
 import co.edu.unicauca.gestordocumental.model.Estudiante;
 import co.edu.unicauca.gestordocumental.model.Tutor;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.GenericGenerator;
 
 import java.util.List;
 
@@ -64,8 +65,12 @@ public class Seguimiento {
 	id_estado_seguimiento*/
 	
 	@Id
-    @Column(name = "id_seguimiento")
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @Column(name = "id_seguimiento", updatable = false, unique = true)
+    // @GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.AUTO, generator="native")
+	@GenericGenerator(name="native",strategy="native")
+	// @GenericGenerator(name = "native_generator", strategy = "native")
+	// @GeneratedValue(generator = "native_generator")
     @NotNull
     private int id_seguimiento;
     
@@ -195,4 +200,11 @@ public class Seguimiento {
 		this.codirector = codirector;
 	}
 
+	public String getCohorte() {
+		return cohorte;
+	}
+
+	public void setCohorte(String cohorte) {
+		this.cohorte = cohorte;
+	}
 }

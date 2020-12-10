@@ -1,6 +1,7 @@
 package co.edu.unicauca.gestordocumental.model.seguimiento;
 
 import co.edu.unicauca.gestordocumental.model.TipoUsuario;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -13,8 +14,10 @@ import java.util.Set;
 public class Persona {
 
     @Id
-    @Column(name = "id_persona")
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @Column(name = "id_persona", updatable = false, unique = true)
+    // @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy=GenerationType.AUTO, generator="native")
+    @GenericGenerator(name="native",strategy="native")
     @NotNull
     private int id_persona;
 

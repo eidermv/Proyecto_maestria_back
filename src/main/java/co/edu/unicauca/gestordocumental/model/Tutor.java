@@ -4,6 +4,7 @@ import co.edu.unicauca.gestordocumental.model.seguimiento.Persona;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import co.edu.unicauca.gestordocumental.model.seguimiento.TipoTutor;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -26,8 +27,10 @@ public class Tutor implements Serializable {
      */
 
     @Id
-    @Column(name = "id_tutor")
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @Column(name = "id_tutor", updatable = false, unique = true)
+    // @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy=GenerationType.AUTO, generator="native")
+    @GenericGenerator(name="native",strategy="native")
     @NotNull
     private int id_tutor;
     

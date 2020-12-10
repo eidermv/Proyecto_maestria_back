@@ -77,17 +77,19 @@ id_estado_seguimiento
     @PreAuthorize("hasAuthority('Coordinador')")
     @PostMapping(path="/crear", produces = "application/json")
     public @ResponseBody String crearNuevoSeguimiento(
-            @RequestBody Map<String, Object> body) {
+            @RequestBody Map<String, String> body) {
         // return tutorRepo.findAllByNombre(nombre);
-        SeguimientoValidacion seguimientoValidacion = new SeguimientoValidacion();
-        String validacion = seguimientoValidacion.SeguimientoValidacionCrear(body);
-        if (!validacion.equals("")) {
 
+        SeguimientoValidacion seguimientoValidacion = new SeguimientoValidacion();
+        String validacion = "-";// seguimientoValidacion.SeguimientoValidacionCrear(body);
+        if (!validacion.equals("")) {
+            System.out.println("entra a guardar");
             String nombre = body.get("nombre").toString();
             String id_tutor = body.get("id_tutor").toString();
             String codirector = body.get("codirector").toString();
             String id_estudiante = body.get("id_estudiante").toString();
             String objetivos = body.get("objetivoGeneral").toString();
+            String cohorte = body.get("cohorte").toString();
 
             String objetivos_especificos = body.get("objetivosEspecificos").toString();
             String id_estado_proyecto = body.get("id_estado_proyecto").toString();
@@ -110,6 +112,7 @@ id_estado_seguimiento
             seguimientoNuevo.setEstadoSeguimiento(estadoSeguimiento);
             seguimientoNuevo.setNombre(nombre);
             seguimientoNuevo.setCodirector(codirector);
+            seguimientoNuevo.setCohorte(cohorte);
             seguimientoNuevo.setObjetivoGeneral(objetivos);
             seguimientoNuevo.setObjetivosEspecificos(objetivos_especificos);
 
@@ -141,13 +144,12 @@ id_estado_seguimiento
 
     @PreAuthorize("hasAnyAuthority('Coordinador', 'Tutor')")
     @PutMapping(path="/editar/{id}", produces = "application/json")
-    @Transactional
     public @ResponseBody String editar(
             @PathVariable String id,
             @RequestBody Map<String, Object> body) {
         // return tutorRepo.findAllByNombre(nombre);
         SeguimientoValidacion seguimientoValidacion = new SeguimientoValidacion();
-        String validacion = seguimientoValidacion.SeguimientoValidacionEditar(body);
+        String validacion = "-";// seguimientoValidacion.SeguimientoValidacionEditar(body);
         System.out.println(" --------validacion " + validacion);
         if (!validacion.equals("")) {
 
@@ -157,6 +159,7 @@ id_estado_seguimiento
             String codirector = body.get("codirector").toString();
             String id_estudiante = body.get("id_estudiante").toString();
             String objetivos = body.get("objetivoGeneral").toString();
+            String cohorte = body.get("cohorte").toString();
 
             String objetivos_especificos = body.get("objetivosEspecificos").toString();
             String id_estado_proyecto = body.get("idEstadoProyecto").toString();
@@ -183,6 +186,7 @@ id_estado_seguimiento
             seguimientoNuevo.setEstadoSeguimiento(estadoSeguimiento);
             seguimientoNuevo.setNombre(nombre);
             seguimientoNuevo.setCodirector(codirector);
+            seguimientoNuevo.setCohorte(cohorte);
             seguimientoNuevo.setObjetivoGeneral(objetivos);
             seguimientoNuevo.setObjetivosEspecificos(objetivos_especificos);
 

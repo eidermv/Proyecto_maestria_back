@@ -36,11 +36,11 @@ id_estado_seguimiento
 
      */
 
-    public String SeguimientoValidacionCrear(Map<String, Object> body) {
+    public String SeguimientoValidacionCrear(Map<String, String> body) {
         String nombre = body.get("nombre").toString();
         String id_tutor = body.get("id_tutor").toString();
         String id_estudiante = body.get("id_estudiante").toString();
-        String objetivos = body.get("objetivos").toString();
+        String objetivos = body.get("objetivoGeneral").toString();
 
         if (objetivos == null) {
             return "Objetivo es obligatorio";
