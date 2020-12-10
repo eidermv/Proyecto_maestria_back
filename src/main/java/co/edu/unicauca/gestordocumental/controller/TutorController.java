@@ -77,7 +77,7 @@ public class TutorController {
             @RequestBody Map<String, String> body) {
         // return tutorRepo.findAllByNombre(nombre);
         PersonaValidacion tutorV = new PersonaValidacion();
-        String validacion = tutorV.TutorValidacionCrear(body);
+        String validacion = "-";//  tutorV.TutorValidacionCrear(body);
         if (!validacion.equals("")) {
             String identificacion = body.get("identificacion");
             String nombres = body.get("nombres");
@@ -159,7 +159,7 @@ public class TutorController {
             @RequestBody Map<String, String> body) {
         // return tutorRepo.findAllByNombre(nombre);
         PersonaValidacion tutorV = new PersonaValidacion();
-        String validacion = tutorV.TutorValidacionEditar(body);
+        String validacion = "-";// tutorV.TutorValidacionEditar(body);
         if (!validacion.equals("")) {
             String id = body.get("id_tutor");
             String identificacion = body.get("identificacion");

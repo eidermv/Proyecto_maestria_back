@@ -52,7 +52,7 @@ visibilidad (si - 1 o no - 0) - para hacer visible al coordinador, por defecto n
             @RequestBody Map<String, String> body) {
         // return tutorRepo.findAllByNombre(nombre);
         ActividadValidacion actividadValidacion = new ActividadValidacion();
-        String validacion = actividadValidacion.actividadValidacionCrear(body);
+        String validacion = "-";// actividadValidacion.actividadValidacionCrear(body);
         if (!validacion.equals("")) {
 
             String semana = body.get("semana");
@@ -114,7 +114,7 @@ visibilidad (si - 1 o no - 0) - para hacer visible al coordinador, por defecto n
             @RequestBody Map<String, String> body) {
         // return tutorRepo.findAllByNombre(nombre);
         ActividadValidacion actividadValidacion = new ActividadValidacion();
-        String validacion = actividadValidacion.actividadValidacionEditar(body);
+        String validacion =  "-";//  actividadValidacion.actividadValidacionEditar(body);
         if (!validacion.equals("")) {
 
             String id_actividad = body.get("id_actividad");
