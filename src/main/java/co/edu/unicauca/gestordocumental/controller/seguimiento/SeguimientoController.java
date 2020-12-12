@@ -216,13 +216,14 @@ id_estado_seguimiento
         return rta.toString();
     }
 
+    @PreAuthorize("hasAuthority('Coordinador')")
     @DeleteMapping(path="/eliminar/{id_seguimiento}", produces = "application/json")
     public @ResponseBody String editarTutor(
             @PathVariable String id_seguimiento) {
         this.rta = new JSONObject();
         if (this.seguimientoRepo.existsById(Integer.parseInt(id_seguimiento))) {
 
-            Seguimiento seguimiento = this.seguimientoRepo.findById(Integer.parseInt(id_seguimiento)).get();
+            // Seguimiento seguimiento = this.seguimientoRepo.findById(Integer.parseInt(id_seguimiento)).get();
 
             try {
                 int valor = this.seguimientoRepo.eliminarPorId(Integer.parseInt(id_seguimiento));

@@ -177,10 +177,10 @@ visibilidad (si - 1 o no - 0) - para hacer visible al coordinador, por defecto n
         this.rta = new JSONObject();
         if (this.actividadRepo.findById(Integer.parseInt(id_actividad)).isPresent()) {
 
-            Actividad actividad = this.actividadRepo.findById(Integer.parseInt(id_actividad)).get();
+            // Actividad actividad = this.actividadRepo.findById(Integer.parseInt(id_actividad)).get();
 
             try {
-                this.actividadRepo.deleteById(actividad.getIdActividad());
+                this.actividadRepo.deleteById(Integer.parseInt(id_actividad));
                 rta.put("estado", "exito");
                 rta.put("data", "");
                 rta.put("mensaje", "Actividad se elimino correctamente");
