@@ -180,10 +180,19 @@ visibilidad (si - 1 o no - 0) - para hacer visible al coordinador, por defecto n
             // Actividad actividad = this.actividadRepo.findById(Integer.parseInt(id_actividad)).get();
 
             try {
-                this.actividadRepo.deleteById(Integer.parseInt(id_actividad));
-                rta.put("estado", "exito");
-                rta.put("data", "");
-                rta.put("mensaje", "Actividad se elimino correctamente");
+
+                int valor = this.actividadRepo.eliminarPorId(Integer.parseInt(id_actividad));
+
+                // System.out.println(" ----- " + valor);
+                if (valor == 1) {
+                    rta.put("estado", "exito");
+                    rta.put("data", "");
+                    rta.put("mensaje", "Actividad se elimino correctamente");
+                } else {
+                    rta.put("estado", "fallo");
+                    rta.put("data", "");
+                    rta.put("mensaje", "Fallo eliminando actividad");
+                }
             } catch (Exception e) {
                 rta.put("estado", "fallo");
                 rta.put("data", "");

@@ -226,17 +226,25 @@ id_estado_seguimiento
             // Seguimiento seguimiento = this.seguimientoRepo.findById(Integer.parseInt(id_seguimiento)).get();
 
             try {
-                int valor = this.seguimientoRepo.eliminarPorId(Integer.parseInt(id_seguimiento));
-                // System.out.println(" ----- " + valor);
-                if (valor == 1) {
-                    rta.put("estado", "exito");
-                    rta.put("data", "");
-                    rta.put("mensaje", "Seguimiento se elimino correctamente");
+                int valoresActividades = this.seguimientoRepo.eliminarActividadPorSeguimiento(Integer.parseInt(id_seguimiento));
+                if (valoresActividades >= 0) {
+                    int valor = this.seguimientoRepo.eliminarPorId(Integer.parseInt(id_seguimiento));
+                    // System.out.println(" ----- " + valor);
+                    if (valor == 1) {
+                        rta.put("estado", "exito");
+                        rta.put("data", "");
+                        rta.put("mensaje", "Seguimiento se elimino correctamente");
+                    } else {
+                        rta.put("estado", "fallo");
+                        rta.put("data", "");
+                        rta.put("mensaje", "Fallo eliminando seguimiento");
+                    }
                 } else {
                     rta.put("estado", "fallo");
                     rta.put("data", "");
-                    rta.put("mensaje", "Fallo eliminando seguimiento");
+                    rta.put("mensaje", "Fallo eliminando seguimiento por actividades asociadas");
                 }
+
 
             } catch (Exception e) {
                 rta.put("estado", "fallo");

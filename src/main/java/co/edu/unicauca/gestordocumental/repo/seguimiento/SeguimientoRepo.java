@@ -31,4 +31,8 @@ public interface SeguimientoRepo extends JpaRepository<Seguimiento, Integer> {
     @Modifying
     @Query(value = "DELETE FROM Seguimiento s WHERE s.id_seguimiento = ?1")
     int eliminarPorId(Integer id_seguimiento);
+
+    @Modifying
+    @Query(value = "DELETE FROM Actividad a WHERE a.seguimiento.id_seguimiento = ?1")
+    int eliminarActividadPorSeguimiento(Integer id_seguimiento);
 }
