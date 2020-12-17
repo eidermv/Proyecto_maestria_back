@@ -1,5 +1,6 @@
 package co.edu.unicauca.gestordocumental.controller;
 
+import co.edu.unicauca.gestordocumental.model.Estudiante;
 import co.edu.unicauca.gestordocumental.model.TipoUsuario;
 import co.edu.unicauca.gestordocumental.model.Tutor;
 import co.edu.unicauca.gestordocumental.model.Usuario;
@@ -89,21 +90,27 @@ public class TutorController {
             String id_tipo_tutor = body.get("id_tipo_tutor");
             String universidad = body.get("universidad");
 
+            System.out.println("Entra y va aqui");
+
             this.rta = new JSONObject();
             Tutor tutorNuevo = new Tutor();
             Persona personaNueva = new Persona();
             Usuario usuarioNuevo = new Usuario();
-
+            System.out.println("Entra y va aqui -- 1");
             personaNueva.setNombres(nombres);
             personaNueva.setApellidos(apellidos);
             personaNueva.setCorreo(correo);
             // 3 - equivale a tutor
+
             Set<TipoUsuario> tipo = new HashSet<>();
-            TipoUsuario tut = tipoUsuarioRepo.findById(3).get();
+            System.out.println("Entra y va aqui -- 1.5");
+            TipoUsuario tut = tipoUsuarioRepo.buscarPorId(3L);
+            System.out.println("Entra y va aqui -- 2");
             tipo.add(tut);
             // personaNueva.setTiposUsuario(tipo);
 
             Persona guardada = this.personaRepo.save(personaNueva);
+            System.out.println("Entra y va aqui -- 3");
 
             if (guardada != null){
                 usuarioNuevo.setPersona(guardada);
@@ -115,16 +122,24 @@ public class TutorController {
                 Usuario us = usuarioRepo.save(usuarioNuevo);
 
                 if (us != null) {
-                    tutorNuevo.setTipoTutor(tipoTutorRepo.findById(Integer.parseInt(id_tipo_tutor)).get());
+                    System.out.println("Entra y va aqui -- 4");
+                    tutorNuevo.setTipoTutor(tipoTutorRepo.buscarPorId(Integer.parseInt(id_tipo_tutor)));
+                    System.out.println("Entra y va aqui -- 5");
                     tutorNuevo.setPersona(guardada);
                     tutorNuevo.setGrupoInvestigacion(grupo_investigacion);
                     tutorNuevo.setApellido(apellidos);
                     tutorNuevo.setCorreo(correo);
                     tutorNuevo.setNombre(nombres);
                     tutorNuevo.setUniversidad(universidad);
-                    tutorNuevo.setTelefono((telefono==null)?0:Integer.parseInt(telefono));
+                    tutorNuevo.setTelefono((telefono==null)?0:Long.parseLong(telefono));
+                    System.out.println("Entra y va aqui -- 5.5 " + telefono);
                     tutorNuevo.setDepartamento(departamento);
-                    if (tutorRepo.save(tutorNuevo) != null){
+                    tutorNuevo.setIdentificacion(identificacion);
+                    tutorNuevo.setEstudiantes(new ArrayList<Estudiante>());
+                    System.out.println("Entra y va aqui -- 6");
+                    Tutor tN = tutorRepo.save(tutorNuevo);
+                    System.out.println("Entra y va aqui -- 7");
+                    if (tN != null){
                         rta.put("estado", "exito");
                         rta.put("data", "");
                         rta.put("mensaje", "Tutor se creo correctamente");
@@ -173,16 +188,16 @@ public class TutorController {
             String universidad = body.get("universidad");
 
             this.rta = new JSONObject();
-            Tutor tutorNuevo = this.tutorRepo.findById(Integer.parseInt(id)).get();
+            Tutor tutorNuevo = tutorRepo.findById(Integer.parseInt(id)).get();
             Persona personaNueva = tutorNuevo.getPersona();
-            Usuario usuarioNuevo = this.usuarioRepo.findByUsuario(personaNueva.getCorreo());
+            Usuario usuarioNuevo = usuarioRepo.findByUsuario(personaNueva.getCorreo());
 
             personaNueva.setNombres(nombres);
             personaNueva.setApellidos(apellidos);
             personaNueva.setCorreo(correo);
             // 3 - equivale a tutor
             Set<TipoUsuario> tipo = new HashSet<>();
-            TipoUsuario tut = tipoUsuarioRepo.findById(3).get();
+            TipoUsuario tut = tipoUsuarioRepo.findById(3L).get();
             tipo.add(tut);
             // personaNueva.setTiposUsuario(tipo);
 
@@ -200,12 +215,13 @@ public class TutorController {
                 if (us != null) {
                     tutorNuevo.setTipoTutor(tipoTutorRepo.findById(Integer.parseInt(id_tipo_tutor)).get());
                     tutorNuevo.setPersona(guardada);
+                    tutorNuevo.setIdentificacion(identificacion);
                     tutorNuevo.setGrupoInvestigacion(grupo_investigacion);
                     tutorNuevo.setApellido(apellidos);
                     tutorNuevo.setCorreo(correo);
                     tutorNuevo.setNombre(nombres);
                     tutorNuevo.setUniversidad(universidad);
-                    tutorNuevo.setTelefono((telefono==null)?0:Integer.parseInt(telefono));
+                    tutorNuevo.setTelefono((telefono==null)?0:Long.parseLong(telefono));
                     tutorNuevo.setDepartamento(departamento);
                     if (tutorRepo.save(tutorNuevo) != null){
                         rta.put("estado", "exito");

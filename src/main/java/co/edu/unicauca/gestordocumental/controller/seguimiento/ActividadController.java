@@ -208,7 +208,7 @@ visibilidad (si - 1 o no - 0) - para hacer visible al coordinador, por defecto n
         return rta.toString();
     }
 
-    @PreAuthorize("hasAuthority('Tutor')")
+    @PreAuthorize("hasAnyAuthority('Estudiante', 'Tutor')")
     @GetMapping(path="/listarPorSeguimiento/{id_seguimiento}", produces = "application/json")
     public @ResponseBody String listarPorSeguimiento(@PathVariable String id_seguimiento) {
         // return tutorRepo.findAllByNombre(nombre);

@@ -33,10 +33,11 @@ public class Tutor implements Serializable {
     @GenericGenerator(name="native",strategy="native")
     @NotNull
     private int id_tutor;
-    
+
+    @Size(max = 20)
     @Column(name = "identificacion")
     @NotNull
-    private long identificacion;
+    private String identificacion;
     
     @Size(max = 50)
     @Column(name = "nombres")
@@ -174,5 +175,13 @@ public class Tutor implements Serializable {
 
     public void setPersona(Persona persona) {
         this.persona = persona;
+    }
+
+    public String getIdentificacion() {
+        return identificacion;
+    }
+
+    public void setIdentificacion(String identificacion) {
+        this.identificacion = identificacion;
     }
 }
