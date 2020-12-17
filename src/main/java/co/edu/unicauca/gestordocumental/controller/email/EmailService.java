@@ -48,11 +48,11 @@ public class EmailService implements EmailPort{
     private JavaMailSender sender;
 
     @Override
-    public boolean sendEmail(EmailBody emailBody)  {
+    public boolean sendEmail(EmailBody emailBody, String nombre)  {
         LOGGER.info("EmailBody: {}", emailBody.toString());
         // return sendEmailTool(emailBody.getContent(),emailBody.getEmail(), emailBody.getSubject());
-        Tutor t = tutorRepo.findById(1).get();
-        String contenido = contenidoP1 + t.getNombre() + " " + t.getApellido() + contenidoP2;
+        // Tutor t = tutorRepo.findById(1).get();
+        String contenido = contenidoP1 + nombre + contenidoP2;
         return sendEmailTool(contenido,emailBody.getEmail(), emailBody.getSubject());
     }
 

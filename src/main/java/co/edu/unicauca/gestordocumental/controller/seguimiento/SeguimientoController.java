@@ -1,5 +1,7 @@
 package co.edu.unicauca.gestordocumental.controller.seguimiento;
 
+import co.edu.unicauca.gestordocumental.controller.email.EmailBody;
+import co.edu.unicauca.gestordocumental.controller.email.EmailPort;
 import co.edu.unicauca.gestordocumental.model.Estudiante;
 import co.edu.unicauca.gestordocumental.model.TipoUsuario;
 import co.edu.unicauca.gestordocumental.model.Tutor;
@@ -56,6 +58,9 @@ public class SeguimientoController {
 
     @Autowired
     private EstudianteRepo estudianteRepo;
+
+    @Autowired
+    private EmailPort emailPort;
 
     JSONObject rta = new JSONObject();
 
@@ -123,9 +128,22 @@ id_estado_seguimiento
 
             if (guardada != null){
 
-                        rta.put("estado", "exito");
-                        rta.put("data", "");
-                        rta.put("mensaje", "Seguimiento se creo correctamente");
+                EmailBody emailBody = new EmailBody();
+                emailBody.setEmail(tutor.getCorreo());
+                emailBody.setSubject("Notificacion - Se Te Ha Asignado El Seguimiento ("+seguimientoNuevo.getNombre()+")");
+                boolean resultado = emailPort.sendEmail(emailBody, tutor.getNombre() + " " + tutor.getApellido());
+
+
+                if (resultado) {
+                    rta.put("estado", "exito");
+                    rta.put("data", "");
+                    rta.put("mensaje", "Seguimiento se creo correctamente y se notifico");
+                } else {
+                    rta.put("estado", "exito");
+                    rta.put("data", "");
+                    rta.put("mensaje", "Seguimiento se creo correctamente, pero no se notifico");
+                }
+
 
             } else {
                 rta.put("estado", "fallo");

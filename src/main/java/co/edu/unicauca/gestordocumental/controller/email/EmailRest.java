@@ -17,6 +17,6 @@ public class EmailRest {
     @PostMapping(path = "/send")
     @ResponseBody
     public boolean SendEmail(@RequestBody EmailBody emailBody)  {
-        return emailPort.sendEmail(emailBody);
+        return emailPort.sendEmail(emailBody, "Carlos Cobos");
     }
 }
