@@ -71,8 +71,8 @@ visibilidad (si - 1 o no - 0) - para hacer visible al coordinador, por defecto n
             Seguimiento seguimiento = seguimientoRepo.findById(Integer.parseInt(id_seguimiento)).get();
 
             // 0 - no, 1 - si
-            actividadNuevo.setCumplida(0);
-            actividadNuevo.setVisible(0);
+            actividadNuevo.setCumplida(Integer.parseInt(cumplido));
+            actividadNuevo.setVisible(Integer.parseInt(visibilidad));
             actividadNuevo.setSemana(semana);
             try {
                 actividadNuevo.setFechaInicio(new SimpleDateFormat("dd/MM/yyyy").parse(fecha_inicio));
@@ -134,8 +134,8 @@ visibilidad (si - 1 o no - 0) - para hacer visible al coordinador, por defecto n
             Seguimiento seguimiento = seguimientoRepo.findById(Integer.parseInt(id_seguimiento)).get();
 
             // 0 - no, 1 - si
-            actividadNuevo.setCumplida(0);
-            actividadNuevo.setVisible(0);
+            actividadNuevo.setCumplida(Integer.parseInt(cumplido));
+            actividadNuevo.setVisible(Integer.parseInt(visibilidad));
             actividadNuevo.setSemana(semana);
             try {
                 actividadNuevo.setFechaInicio(new SimpleDateFormat("dd/MM/yyyy").parse(fecha_inicio));
