@@ -8,6 +8,7 @@ import co.edu.unicauca.gestordocumental.repo.TutorRepo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,9 @@ public class EmailService implements EmailPort{
 
     @Autowired
     private TutorRepo tutorRepo;
+
+    @Value("${spring.mail.username}")
+    private String from;
 
     private static final String contenidoP1 = "<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>" +
             "<html xmlns='http://www.w3.org/1999/xhtml' xmlns:o='urn:schemas-microsoft-com:office:office'>" +
@@ -60,12 +64,13 @@ public class EmailService implements EmailPort{
     private boolean sendEmailTool(String textMessage, String email,String subject) {
         boolean send = false;
         MimeMessage message = sender.createMimeMessage();
-        MimeMessageHelper helper = new MimeMessageHelper(message);
         try {
+            MimeMessageHelper helper = new MimeMessageHelper(message, true);
             System.out.println("Cargando mensaje -----");
+            helper.setFrom(from);
             helper.setTo(email);
-            helper.setText(textMessage, true);
             helper.setSubject(subject);
+            helper.setText(textMessage, true);
             sender.send(message);
             send = true;
             LOGGER.info("Mail enviado!");
