@@ -69,7 +69,7 @@ visibilidad (si - 1 o no - 0) - para hacer visible al coordinador, por defecto n
             this.rta = new JSONObject();
             Actividad actividadNuevo = new Actividad();
             Seguimiento seguimiento = seguimientoRepo.findById(Integer.parseInt(id_seguimiento)).get();
-
+            
             // 0 - no, 1 - si
             actividadNuevo.setCumplida(Integer.parseInt(cumplido));
             actividadNuevo.setVisible(Integer.parseInt(visibilidad));
