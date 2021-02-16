@@ -181,18 +181,20 @@ visibilidad (si - 1 o no - 0) - para hacer visible al coordinador, por defecto n
 
             try {
 
-                int valor = this.actividadRepo.eliminarPorId(Integer.parseInt(id_actividad));
+                System.out.println(" ------ " + id_actividad);
 
-                // System.out.println(" ----- " + valor);
-                if (valor == 1) {
+                this.actividadRepo.eliminarPorId(Integer.parseInt(id_actividad));
+
+                //System.out.println(" -----Eliminar " + valor.get(0));
+                //if (valor.get(0) == 1) {
                     rta.put("estado", "exito");
                     rta.put("data", "");
                     rta.put("mensaje", "Actividad se elimino correctamente");
-                } else {
+                /*} else {
                     rta.put("estado", "fallo");
                     rta.put("data", "");
                     rta.put("mensaje", "Fallo eliminando actividad");
-                }
+                }*/
             } catch (Exception e) {
                 rta.put("estado", "fallo");
                 rta.put("data", "");
