@@ -115,7 +115,7 @@ public class TutorController {
             if (guardada != null){
                 usuarioNuevo.setPersona(guardada);
                 usuarioNuevo.setEstado(true);
-                usuarioNuevo.setUsuario(correo);
+                usuarioNuevo.setUsuario(correo.split("@")[0].toLowerCase());
                 usuarioNuevo.setContrasena(bCryptPasswordEncoder.encode(identificacion));
                 usuarioNuevo.setTiposUsuario(tipo);
 
