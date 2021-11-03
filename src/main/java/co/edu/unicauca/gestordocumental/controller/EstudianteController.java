@@ -7,6 +7,7 @@ import co.edu.unicauca.gestordocumental.repo.EstudianteRepo;
 import co.edu.unicauca.gestordocumental.repo.TipoUsuarioRepo;
 import co.edu.unicauca.gestordocumental.repo.TutorRepo;
 import co.edu.unicauca.gestordocumental.repo.UsuarioRepo;
+import co.edu.unicauca.gestordocumental.repo.seguimiento.PersonaRepo;
 import co.edu.unicauca.gestordocumental.respuesta.Respuesta;
 import co.edu.unicauca.gestordocumental.validador.EstudianteValidador;
 import io.jsonwebtoken.Claims;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
+import java.util.Objects;
 
 @Controller
 @RequestMapping(path="/estudiante")
@@ -53,6 +55,9 @@ public class EstudianteController {
     
     @Autowired
     private TipoUsuarioRepo tipoUsuarioRepo;
+
+    @Autowired
+    private PersonaRepo personaRepo;
     
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -87,6 +92,8 @@ public class EstudianteController {
         String tutor = body.get("tutor");
         String usuario = correo.split("@")[0].toLowerCase();
         String contrasena = bCryptPasswordEncoder.encode(codigo);
+        //System.out.println("-----------por aqui 4--------------");
+
         tipoUsuario = tipoUsuarioRepo.findByNombre(ESTUDIANTE_STRING);
 
         /*Se verifica que el código no esté registrado*/
@@ -95,8 +102,11 @@ public class EstudianteController {
             res.badRequest(100, 102);
         }
 
+        System.out.println("-----------por aqui--------------");
+
         /*Se verifica que el correo no esté registrado*/
         esEstudianteRegistrado = estudianteRepo.findByCorreo(correo);
+        //System.out.println("-------" + Objects.isNull(esEstudianteRegistrado));
         if (esEstudianteRegistrado != null) {
             res.badRequest(103, 102);
         }
@@ -110,6 +120,8 @@ public class EstudianteController {
         if (tutorAsignado == null) {
             res.badRequest(200, 103);
         }
+
+        //System.out.println("------pasa validaciones");
 
         /*Se registran las carpetas de ese usuario en OpenKM*/
         String rutaPrincipal = OpenKM.RUTA_BASE + usuario;
@@ -127,35 +139,42 @@ public class EstudianteController {
         openKM.crearFolder(rutaPracticaDocente);
         openKM.crearFolder(rutaPasantia);
 
-        /*Se registra un nuevo usuario para el estudiante*/
-        Usuario nuevoUsuario = new Usuario();
-        nuevoUsuario.setUsuario(usuario);
-        nuevoUsuario.setContrasena(contrasena);
-        nuevoUsuario.setEstado(Boolean.TRUE);
-        nuevoUsuario.addTipoUsuario(tipoUsuario);
-        usuarioRepo.save(nuevoUsuario);
 
         Persona persona = new Persona();
         persona.setNombres(nombres);
         persona.setApellidos(apellidos);
         persona.setCorreo(correo);
+
+        Persona guardada = this.personaRepo.save(persona);
+        //System.out.println("Entra y va aqui -- 3");
         // persona.addTipoUsuario(tipoUsuario);
 
         /*Se registra el estudiante*/
         Estudiante nuevoEstudiante = new Estudiante();
         nuevoEstudiante.setCodigo(codigo);
-        // nuevoEstudiante.setNombres(nombres);
-        // nuevoEstudiante.setApellidos(apellidos);
-        // nuevoEstudiante.setCorreo(correo);
+        nuevoEstudiante.setNombres(nombres);
+        nuevoEstudiante.setApellidos(apellidos);
+        nuevoEstudiante.setCorreo(correo);
         nuevoEstudiante.setCohorte(cohorte);
         nuevoEstudiante.setSemestre(semestre);
         nuevoEstudiante.setEstado(estado);
         nuevoEstudiante.setCreditos(0);
         nuevoEstudiante.setPertenece(pertenece);
         nuevoEstudiante.setTutor(tutorAsignado);
-        nuevoEstudiante.setPersona(persona);
+        nuevoEstudiante.setPersona(guardada);
         // nuevoEstudiante.setUsuario(nuevoUsuario);
         estudianteRepo.save(nuevoEstudiante);
+
+
+        /*Se registra un nuevo usuario para el estudiante*/
+        Usuario nuevoUsuario = new Usuario();
+        nuevoUsuario.setUsuario(usuario);
+        nuevoUsuario.setContrasena(contrasena);
+        nuevoUsuario.setEstado(Boolean.TRUE);
+        nuevoUsuario.addTipoUsuario(tipoUsuario);
+        nuevoUsuario.setPersona(guardada);
+        usuarioRepo.save(nuevoUsuario);
+        System.out.println("CREA TODITO");
     }
 
     /**

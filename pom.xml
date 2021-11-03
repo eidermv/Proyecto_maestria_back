@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>co.edu.unicauca</groupId>
 	<artifactId>gestordocumenta</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<name>gestordocumenta</name>
 	<description>Proyecto realizado con Spring Boot</description>
 
@@ -41,7 +41,10 @@
 	</profiles>
 
 	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>14</java.version>
+		<start-class>co.edu.unicauca.gestordocumental.GestordocumentaApplication</start-class>
 	</properties>
 
 	<repositories>
@@ -130,11 +133,13 @@
 	</dependencies>
 
 	<build>
+		<finalName>${project.artifactId}</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
+					<mainClass>co.edu.unicauca.gestordocumental.GestordocumentaApplication</mainClass>
 					<executable>true</executable>
 				</configuration>
 			</plugin>
