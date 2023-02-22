@@ -116,7 +116,7 @@ public class EstudianteController {
         }*/
 
         /*Se verifica que el tutor esté registrado*/
-        Tutor tutorAsignado = tutorRepo.findByNombre(tutor);
+        Tutor tutorAsignado = tutorRepo.findByIdentificacion(tutor);
         if (tutorAsignado == null) {
             res.badRequest(200, 103);
         }
@@ -256,7 +256,7 @@ public class EstudianteController {
         Integer semestre = estudianteValidador.validarSemestre(body.getOrDefault("semestre", "" + estudianteRegistrado.getSemestre()), false);
         String estado = estudianteValidador.validarEstado(body.getOrDefault("estado", estudianteRegistrado.getEstado()), false);
         String pertenece = estudianteValidador.validarPertenece(body.getOrDefault("pertenece", estudianteRegistrado.getEstado()), false);
-        String tutor = body.getOrDefault("tutor", estudianteRegistrado.getTutor().getNombre());
+        String tutor = body.getOrDefault("tutor", estudianteRegistrado.getTutor().getIdentificacion());
 
         /*Se verifica que el nuevo código no exista*/
         Estudiante esEstudianteRegistrado = estudianteRepo.findByCodigo(codigo);
@@ -271,7 +271,7 @@ public class EstudianteController {
         }
 
         /*Se verifica que el tutor esté registrado*/
-        Tutor tutorAsignado = tutorRepo.findByNombre(tutor);
+        Tutor tutorAsignado = tutorRepo.findByIdentificacion(tutor);
         if (tutorAsignado == null) {
             res.badRequest(200, 103);
         }

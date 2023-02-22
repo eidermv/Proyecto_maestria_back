@@ -14,6 +14,8 @@ import java.util.List;
 @Repository
 public interface TutorRepo extends CrudRepository<Tutor, Integer>{
     Tutor findByNombre(@Param("nombre") String nombre);
+
+    Tutor findByIdentificacion(@Param("identificacion") String identificacion);
     List<Tutor> findAllByNombre(@Param("nombre") String nombre);
 
     @Query("SELECT t FROM Tutor t where t.persona.id_persona = ?1")

@@ -18,6 +18,7 @@ import java.util.List;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Tutor.findByNombre", query = "SELECT t FROM Tutor t WHERE concat(t.persona.nombres, ' ', t.persona.apellidos) =:nombre"),
+    @NamedQuery(name = "Tutor.findByIdentificacion", query = "SELECT t FROM Tutor t WHERE t.identificacion =:identificacion"),
     @NamedQuery(name = "Tutor.findAllByNombre", query = "SELECT t FROM Tutor t WHERE concat(t.persona.nombres, ' ', t.persona.apellidos) LIKE CONCAT('%',:nombre,'%')")
 })
 public class Tutor implements Serializable {
