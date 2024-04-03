@@ -18,12 +18,12 @@
 	<packaging>jar</packaging>
 	<!--	<packaging>${packaging.type}</packaging>-->
 
-	<profiles>
+	<!--<profiles>
 		<profile>
 			<id>jar</id>
 			<properties>
 				<packaging.type>jar</packaging.type>
-				<spring.profiles.active>dev</spring.profiles.active>
+				<spring.profiles.active>cloud,Bd,email</spring.profiles.active>
 			</properties>
 		</profile>
 		<profile>
@@ -40,7 +40,7 @@
 				</dependency>
 			</dependencies>
 		</profile>
-	</profiles>
+	</profiles>-->
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

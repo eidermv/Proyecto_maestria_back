@@ -43,7 +43,7 @@ public class EmailService implements EmailPort{
             "<p style='text-align:center;'>¡Hola ";
     private static final String contenidoP2 = "!, queremos informarte que se ha enviado una nueva solicitud de seguimiento por parte del administrador, <br> puedes visualizarla en la sección de notificaciones. </p>" +
             "<p style='text-align:center;'>Si quieres revisar la solicitud, dirígete al siguiente enlace:</p>" +
-            "<p style='text-align:center;'><a href='https://www.google.com.mx/'>Ir a notificaciones</a></p>" +
+            "<p style='text-align:center;'><a href='https://mautomaticaunicauca.com/#/login'>Ir a notificaciones</a></p>" +
             "</font>" +
             "</body>" +
             "</html>";
