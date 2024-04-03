@@ -3,35 +3,27 @@ package co.edu.unicauca.gestordocumental.controller.seguimiento;
 import co.edu.unicauca.gestordocumental.controller.email.EmailBody;
 import co.edu.unicauca.gestordocumental.controller.email.EmailPort;
 import co.edu.unicauca.gestordocumental.model.Estudiante;
-import co.edu.unicauca.gestordocumental.model.TipoUsuario;
 import co.edu.unicauca.gestordocumental.model.Tutor;
-import co.edu.unicauca.gestordocumental.model.Usuario;
 import co.edu.unicauca.gestordocumental.model.seguimiento.EstadoProyecto;
 import co.edu.unicauca.gestordocumental.model.seguimiento.EstadoSeguimiento;
-import co.edu.unicauca.gestordocumental.model.seguimiento.TipoSeguimiento;
-
-import co.edu.unicauca.gestordocumental.model.seguimiento.Persona;
 import co.edu.unicauca.gestordocumental.model.seguimiento.Seguimiento;
+import co.edu.unicauca.gestordocumental.model.seguimiento.TipoSeguimiento;
 import co.edu.unicauca.gestordocumental.repo.EstudianteRepo;
-import co.edu.unicauca.gestordocumental.repo.TipoUsuarioRepo;
 import co.edu.unicauca.gestordocumental.repo.TutorRepo;
-import co.edu.unicauca.gestordocumental.repo.UsuarioRepo;
-import co.edu.unicauca.gestordocumental.repo.seguimiento.*;
-import co.edu.unicauca.gestordocumental.util.ConvertirJson;
-import co.edu.unicauca.gestordocumental.validador.seguimiento.PersonaValidacion;
+import co.edu.unicauca.gestordocumental.repo.seguimiento.EstadoProyectoRepo;
+import co.edu.unicauca.gestordocumental.repo.seguimiento.EstadoSeguimientoRepo;
+import co.edu.unicauca.gestordocumental.repo.seguimiento.SeguimientoRepo;
+import co.edu.unicauca.gestordocumental.repo.seguimiento.TipoSeguimientoRepo;
 import co.edu.unicauca.gestordocumental.validador.seguimiento.SeguimientoValidacion;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.ColumnResult;
-import java.util.*;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping(path="/seguimiento")

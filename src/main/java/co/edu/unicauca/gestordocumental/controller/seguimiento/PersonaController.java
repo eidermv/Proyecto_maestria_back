@@ -5,11 +5,11 @@ import co.edu.unicauca.gestordocumental.model.Estudiante;
 import co.edu.unicauca.gestordocumental.model.TipoUsuario;
 import co.edu.unicauca.gestordocumental.model.Tutor;
 import co.edu.unicauca.gestordocumental.model.Usuario;
-import co.edu.unicauca.gestordocumental.model.seguimiento.Persona;
 import co.edu.unicauca.gestordocumental.repo.EstudianteRepo;
 import co.edu.unicauca.gestordocumental.repo.TutorRepo;
 import co.edu.unicauca.gestordocumental.repo.UsuarioRepo;
 import co.edu.unicauca.gestordocumental.repo.seguimiento.PersonaRepo;
+import co.edu.unicauca.gestordocumental.token.TokenServicio;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import org.json.JSONObject;
@@ -22,10 +22,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping(path="/persona")
@@ -53,9 +51,11 @@ public class PersonaController {
             @PathVariable String token) {
 
         Claims claims = (Claims) Jwts.parser()
-                .setSigningKey(ConstantesSeguridad.SECRET)
-                .parseClaimsJws(token.replace(ConstantesSeguridad.TOKEN_PREFIX, ""))
-                .getBody();
+                .decryptWith(TokenServicio.convertStringToSecretKeyto(ConstantesSeguridad.SECRET))
+                .build()
+                //.setSigningKey()
+                .parseSignedClaims(token.replace(ConstantesSeguridad.TOKEN_PREFIX, ""))
+                .getPayload();
 
 
         String nombreUsuario = claims.getSubject();

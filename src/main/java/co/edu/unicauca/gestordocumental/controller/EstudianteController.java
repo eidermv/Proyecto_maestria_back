@@ -1,6 +1,5 @@
 package co.edu.unicauca.gestordocumental.controller;
 
-import co.edu.unicauca.gestordocumental.config.ConstantesSeguridad;
 import co.edu.unicauca.gestordocumental.model.*;
 import co.edu.unicauca.gestordocumental.model.seguimiento.Persona;
 import co.edu.unicauca.gestordocumental.repo.EstudianteRepo;
@@ -10,8 +9,6 @@ import co.edu.unicauca.gestordocumental.repo.UsuarioRepo;
 import co.edu.unicauca.gestordocumental.repo.seguimiento.PersonaRepo;
 import co.edu.unicauca.gestordocumental.respuesta.Respuesta;
 import co.edu.unicauca.gestordocumental.validador.EstudianteValidador;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -20,7 +17,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
-import java.util.Objects;
 
 @Controller
 @RequestMapping(path="/estudiante")

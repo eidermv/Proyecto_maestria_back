@@ -1,7 +1,7 @@
 package co.edu.unicauca.gestordocumental.controller.email;
 
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 
 import co.edu.unicauca.gestordocumental.model.Tutor;
 import co.edu.unicauca.gestordocumental.repo.TutorRepo;

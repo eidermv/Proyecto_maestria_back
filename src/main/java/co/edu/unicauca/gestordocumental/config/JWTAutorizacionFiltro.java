@@ -1,5 +1,6 @@
 package co.edu.unicauca.gestordocumental.config;
 
+import co.edu.unicauca.gestordocumental.token.TokenServicio;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -9,10 +10,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
@@ -50,9 +51,15 @@ public class JWTAutorizacionFiltro extends BasicAuthenticationFilter
         {
             
             Claims claims = (Claims) Jwts.parser()
+                    .decryptWith(TokenServicio.convertStringToSecretKeyto(ConstantesSeguridad.SECRET))
+                    .build()
+                    //.setSigningKey()
+                    .parseSignedClaims(token.replace(ConstantesSeguridad.TOKEN_PREFIX, ""))
+                    .getPayload();
+                    /*Jwts.parser()
                     .setSigningKey(ConstantesSeguridad.SECRET)
                     .parseClaimsJws(token.replace(ConstantesSeguridad.TOKEN_PREFIX, ""))
-                    .getBody();
+                    .getBody();*/
             
             Collection authorities =
                 Arrays.stream(claims.get(ConstantesSeguridad.AUTHORIY_KEY).toString().split(","))

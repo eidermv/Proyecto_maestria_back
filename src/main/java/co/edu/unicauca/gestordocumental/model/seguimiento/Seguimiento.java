@@ -1,7 +1,7 @@
 package co.edu.unicauca.gestordocumental.model.seguimiento;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 
 import co.edu.unicauca.gestordocumental.model.Estudiante;
 import co.edu.unicauca.gestordocumental.model.Tutor;

@@ -1,6 +1,5 @@
 package co.edu.unicauca.gestordocumental.controller.seguimiento;
 
-import co.edu.unicauca.gestordocumental.model.seguimiento.Actividad;
 import co.edu.unicauca.gestordocumental.model.seguimiento.EstadoProyecto;
 import co.edu.unicauca.gestordocumental.repo.seguimiento.EstadoProyectoRepo;
 import org.json.JSONObject;
@@ -9,7 +8,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 

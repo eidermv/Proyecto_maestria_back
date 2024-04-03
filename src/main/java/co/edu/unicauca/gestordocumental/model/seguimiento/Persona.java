@@ -1,13 +1,8 @@
 package co.edu.unicauca.gestordocumental.model.seguimiento;
 
-import co.edu.unicauca.gestordocumental.model.TipoUsuario;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import org.hibernate.annotations.GenericGenerator;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Table(name="persona")

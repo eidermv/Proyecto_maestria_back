@@ -1,5 +1,6 @@
 package co.edu.unicauca.gestordocumental.model;
 
+import static co.edu.unicauca.gestordocumental.util.ValorProperties.getHost;
 import com.openkm.sdk4j.OKMWebservices;
 import com.openkm.sdk4j.OKMWebservicesFactory;
 import com.openkm.sdk4j.bean.Document;
@@ -12,12 +13,12 @@ import java.io.InputStream;
 import java.util.List;
 
 public class OpenKM {
-    
+
     /**
      * El host para conectarse a OpenKM
      */
-    private final String HOST = "http://localhost:8083/OpenKM";
-    
+    private final String HOST;
+
     /**
      * Usuario para autenticarse en el host de OpenKM
      */
@@ -44,6 +45,8 @@ public class OpenKM {
     private static OpenKM conexion;
     
     private OpenKM() {
+        this.HOST = getHost();
+        System.out.println("HOST ----> " + this.HOST);
         openKM = OKMWebservicesFactory.newInstance(HOST, USUARIO, CONTRASENA);
     }
     
