@@ -6,27 +6,33 @@ import com.openkm.sdk4j.bean.Document;
 import com.openkm.sdk4j.bean.Folder;
 import com.openkm.sdk4j.bean.form.FormElement;
 import org.apache.commons.io.IOUtils;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.List;
 
+@Component
 public class OpenKM {
-    
+
     /**
      * El host para conectarse a OpenKM
      */
-    private final String HOST = "http://localhost:8083/OpenKM";
-    
+    @Value("${openkm.host}")
+    private String HOST;
+
     /**
      * Usuario para autenticarse en el host de OpenKM
      */
-    private final String USUARIO = "okmAdmin";
-    
+    @Value("${openkm.user}")
+    private String USUARIO;
+
     /**
      * Contraseña para autenticarse en el host de OpenKM
      */
-    private final String CONTRASENA = "admin";
+    @Value("${openkm.pass}")
+    private String CONTRASENA;
     
     /**
      * Ruta base donde se almacenan los archivos en OpenKM
@@ -42,8 +48,10 @@ public class OpenKM {
      * Patron singleton
      */
     private static OpenKM conexion;
-    
+
+
     private OpenKM() {
+        System.out.println("-------open " + this.CONTRASENA);
         openKM = OKMWebservicesFactory.newInstance(HOST, USUARIO, CONTRASENA);
     }
     
