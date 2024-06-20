@@ -1,11 +1,19 @@
 package co.edu.unicauca.gestordocumental.token;
 
 import co.edu.unicauca.gestordocumental.config.ConstantesSeguridad;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwe;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.AeadAlgorithm;
 
 import javax.crypto.SecretKey;
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.KeySpec;
 import java.util.Base64;
 import java.util.Date;
 
@@ -18,7 +26,6 @@ public class TokenServicio
                 .subject(username)
                 .claim(ConstantesSeguridad.AUTHORIY_KEY, authorities)
                 .expiration(new Date(System.currentTimeMillis() + ConstantesSeguridad.EXPIRATION_TIME))
-                //.signWith(convertStringToSecretKeyto(ConstantesSeguridad.SECRET), SignatureAlgorithm.HS512)
                 .encryptWith(convertStringToSecretKeyto(ConstantesSeguridad.SECRET), A256CBC_HS512)
                 .compact();
 
@@ -26,8 +33,8 @@ public class TokenServicio
     }
 
     public static SecretKey convertStringToSecretKeyto(String encodedKey) {
+
         byte[] decodedKey = Base64.getEncoder().encode(encodedKey.getBytes());//Base64.getDecoder().decode(encodedKey);
-        SecretKey originalKey = new SecretKeySpec(decodedKey, 0, decodedKey.length, "AES");
-        return originalKey;
+        return new SecretKeySpec(decodedKey, A256CBC_HS512.getId());
     }
 }

@@ -53,16 +53,11 @@ public class JWTAutorizacionFiltro extends BasicAuthenticationFilter
             Claims claims = (Claims) Jwts.parser()
                     .decryptWith(TokenServicio.convertStringToSecretKeyto(ConstantesSeguridad.SECRET))
                     .build()
-                    //.setSigningKey()
-                    .parseSignedClaims(token.replace(ConstantesSeguridad.TOKEN_PREFIX, ""))
+                    .parseEncryptedClaims(token.replace(ConstantesSeguridad.TOKEN_PREFIX, ""))
                     .getPayload();
-                    /*Jwts.parser()
-                    .setSigningKey(ConstantesSeguridad.SECRET)
-                    .parseClaimsJws(token.replace(ConstantesSeguridad.TOKEN_PREFIX, ""))
-                    .getBody();*/
             
             Collection authorities =
-                Arrays.stream(claims.get(ConstantesSeguridad.AUTHORIY_KEY).toString().split(","))
+                Arrays.stream(claims.get(ConstantesSeguridad.AUTHORIY_KEY, String.class).split(","))
                         .map(SimpleGrantedAuthority::new)
                         .collect(Collectors.toList());
 
